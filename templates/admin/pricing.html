@@ -1,0 +1,52 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Тарифы{% endblock %}
+{% block page_title %}Тарифы{% endblock %}
+
+{% block content %}
+<form method="POST" class="admin-pricing-form">
+    <div class="ve-section" style="margin-bottom: 28px;">
+        <div class="ve-section__badge">Заголовок секции</div>
+        <label class="ve-label" for="pricing_title">Заголовок</label>
+        <textarea class="ve-input ve-input--body" id="pricing_title" name="pricing_title" rows="2">{{ c.pricing_title }}</textarea>
+        <label class="ve-label" for="pricing_description" style="margin-top: 16px;">Описание</label>
+        <textarea class="ve-input ve-input--body" id="pricing_description" name="pricing_description" rows="2">{{ c.pricing_description }}</textarea>
+    </div>
+
+    {% for p in plans %}
+    <div class="ve-section admin-pricing-plan">
+        <div class="ve-section__badge">Тариф #{{ p.id }}</div>
+        <input type="hidden" name="plan_{{ p.id }}_sort_order" value="{{ p.sort_order }}">
+
+        <label class="ve-label" for="plan_{{ p.id }}_name">Название</label>
+        <input class="ve-input ve-input--h4" id="plan_{{ p.id }}_name" name="plan_{{ p.id }}_name" value="{{ p.name }}" required>
+
+        <div class="admin-pricing-plan__row">
+            <div>
+                <label class="ve-label-sm" for="plan_{{ p.id }}_price_month">Цена (месяц)</label>
+                <input class="ve-input ve-input--sm" id="plan_{{ p.id }}_price_month" name="plan_{{ p.id }}_price_month" value="{{ p.price_month }}" placeholder="12 000 руб./мес">
+            </div>
+            <div>
+                <label class="ve-label-sm" for="plan_{{ p.id }}_price_year">Цена (год)</label>
+                <input class="ve-input ve-input--sm" id="plan_{{ p.id }}_price_year" name="plan_{{ p.id }}_price_year" value="{{ p.price_year }}" placeholder="115 200 руб./год">
+            </div>
+        </div>
+
+        <label class="ve-label" for="plan_{{ p.id }}_description">Краткое описание (под названием)</label>
+        <input class="ve-input ve-input--body" id="plan_{{ p.id }}_description" name="plan_{{ p.id }}_description" value="{{ p.description }}" placeholder="Необязательно">
+
+        <label class="ve-label" for="plan_{{ p.id }}_features">Преимущества (каждая строка — пункт)</label>
+        <textarea class="ve-input ve-input--body" id="plan_{{ p.id }}_features" name="plan_{{ p.id }}_features" rows="5">{{ p.features }}</textarea>
+
+        <label class="admin-pricing-plan__check text-body-s">
+            <input type="checkbox" name="plan_{{ p.id }}_is_active" value="1" {% if p.is_active %}checked{% endif %}>
+            Показывать на сайте
+        </label>
+    </div>
+    {% endfor %}
+
+    <div class="ve-submit">
+        <button type="submit" class="ui-btn ui-btn--primary">Сохранить</button>
+    </div>
+</form>
+{% endblock %}

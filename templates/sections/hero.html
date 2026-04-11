@@ -1,0 +1,26 @@
+{% from 'macros/ui_button.html' import ui_button %}
+<div class="container">
+<section class="hero" id="hero" aria-labelledby="hero-title">
+    <h1 id="hero-title" class="hero__title text-display">
+        {{ content.get('hero_title', 'Превратите поток <span class="hero__title-accent">заявок</span><br>в управляемую систему') | safe }}
+    </h1>
+    <p class="hero__lead text-body-m">
+        {{ content.get('hero_description', 'Сервис собирает все запросы в одном месте, структурирует<br>их и автоматически распределяет задачи по команде') | safe }}
+    </p>
+    <div class="hero__visual" role="img">
+        <lottie-player
+            class="hero__lottie"
+            src="{{ url_for('static', filename='Start.json') }}"
+            background="transparent"
+            speed="1"
+            
+            autoplay>
+        </lottie-player>
+    </div>
+
+    <div class="hero__actions">
+        {{ ui_button(content.get('hero_btn_primary', 'Начать бесплатно'), variant='primary', button_type='button') }}
+        {{ ui_button(content.get('hero_btn_secondary', 'Связаться с нами'), href='#contact', variant='secondary') }}
+    </div>
+</section>
+</div>

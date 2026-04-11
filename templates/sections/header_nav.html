@@ -1,0 +1,7 @@
+<nav class="site-header__nav" aria-label="Основная навигация">
+    <ul class="site-header__list">
+        {% for item in nav_items %}
+        <li><a class="text-body-s" href="{{ item.href }}">{{ item.label }}</a></li>
+        {% endfor %}
+    </ul>
+</nav>

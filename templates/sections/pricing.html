@@ -1,0 +1,59 @@
+{% from 'macros/icons.html' import check_icon %}
+<div class="container">
+<section class="pricing" id="pricing" aria-labelledby="pricing-title">
+    <header class="pricing__header">
+        <h2 id="pricing-title" class="pricing__title text-h2">
+            {{ content.get('pricing_title', 'Управляйте заявками<br>без лишних затрат') | safe }}
+        </h2>
+        <p class="pricing__description text-body-m">
+            {{ content.get('pricing_description', 'Экономьте время команды и ускоряйте<br>выполнение задач с помощью автоматизации') | safe }}
+        </p>
+    </header>
+
+    <div class="pricing__table">
+        <div class="pricing__period-header">
+            <div class="pricing__period-gutter" aria-hidden="true"></div>
+            <div class="pricing__period-cell">
+                <div class="pricing__toggle pricing__period-toggle" role="radiogroup" aria-label="Период оплаты">
+                    <span class="pricing__toggle-slider pricing__period-slider" aria-hidden="true"></span>
+                    <label class="pricing__toggle-option pricing__period-option">
+                        <input type="radio" class="pricing__toggle-input pricing__period-input" name="pricing-period" value="month" checked>
+                        <span class="pricing__toggle-label pricing__period-label text-body-m">Месяц</span>
+                    </label>
+                    <label class="pricing__toggle-option pricing__period-option">
+                        <input type="radio" class="pricing__toggle-input pricing__period-input" name="pricing-period" value="year">
+                        <span class="pricing__toggle-label pricing__period-label text-body-m">Год</span>
+                    </label>
+                </div>
+            </div>
+            <div class="pricing__period-gutter" aria-hidden="true"></div>
+        </div>
+        <div class="pricing__grid">
+            {% for p in pricing_plans %}
+            <article
+                class="pricing__card js-pricing-card"
+                data-price-month="{{ p.price_month | e }}"
+                data-price-year="{{ p.price_year | e }}"
+            >
+                <h3 class="pricing__card-title text-h4">{{ p.name }}</h3>
+                {% if p.description %}
+                <p class="pricing__card-desc text-body-m">{{ p.description }}</p>
+                {% endif %}
+                <p class="pricing__card-price text-body-m">
+                    <span class="js-pricing-price-value">{{ p.price_month }}</span>
+                </p>
+                <p class="pricing__features-heading text-body-m">Включает:</p>
+                <ul class="pricing__features">
+                    {% for line in p.features.splitlines() if line.strip() %}
+                    <li class="pricing__feature text-body-m">
+                        <span class="pricing__feature-icon" aria-hidden="true">{{ check_icon() }}</span>
+                        <span class="pricing__feature-text">{{ line.strip() }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+</div>

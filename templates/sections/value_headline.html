@@ -1,0 +1,10 @@
+<section class="value-headline" aria-labelledby="value-headline-title">
+    <div class="container value-headline__inner">
+        <h2 id="value-headline-title" class="value-headline__title text-h1">
+            {{ content.get('less_work_title', 'Меньше ручной работы —<br>больше результата') | safe }}
+        </h2>
+        <p class="value-headline__description text-body-m">
+            {{ content.get('less_work_description', 'Система обрабатывает заявки<br>и распределяет задачи без участия человека') | safe }}
+        </p>
+    </div>
+</section>

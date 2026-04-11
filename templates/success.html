@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% from 'macros/ui_button.html' import ui_button %}
+
+{% block title %}Заявка отправлена — Svod{% endblock %}
+
+{% block content %}
+<div class="container">
+<h1 class="text-h2">Заявка успешно отправлена</h1>
+<p class="text-body-m">Спасибо за обращение! Мы свяжемся с вами в ближайшее время.</p>
+<p>{{ ui_button('Вернуться на главную', href=url_for('main.index'), variant='ghost') }}</p>
+</div>
+{% endblock %}

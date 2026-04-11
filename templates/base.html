@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Svod{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="notification-container" aria-live="polite"></div>
+
+    <div class="site-top site-top--visible">
+        {% include 'sections/header.html' %}
+        {% include 'sections/top_banner.html' %}
+    </div>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include 'sections/footer.html' %}
+    {% include 'sections/contact_modal.html' %}
+
+    <script>
+    (function() {
+        function escapeHtml(text) {
+            var d = document.createElement('div');
+            d.textContent = text;
+            return d.innerHTML;
+        }
+
+        function showNotification(message) {
+            var container = document.getElementById('notification-container');
+            if (!container) return;
+            var el = document.createElement('div');
+            el.className = 'notification notification--success';
+            el.textContent = message;
+            el.setAttribute('role', 'status');
+            container.appendChild(el);
+            requestAnimationFrame(function() {
+                el.classList.add('notification--visible');
+            });
+            setTimeout(function() {
+                el.classList.remove('notification--visible');
+                setTimeout(function() {
+                    if (el.parentNode) el.parentNode.removeChild(el);
+                }, 320);
+            }, 3600);
+        }
+
+        var modal = document.getElementById('contactModal');
+        if (!modal) return;
+
+        var form = document.getElementById('contactForm');
+        var errorsBox = document.getElementById('contactFormErrors');
+        var submitBtn = document.getElementById('contactFormSubmit');
+
+        function closeModal() {
+            modal.classList.remove('modal-overlay--open');
+            document.body.style.overflow = '';
+        }
+
+        function openModal() {
+            modal.classList.add('modal-overlay--open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        document.querySelectorAll('a[href="#contact"], button[data-contact]').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                openModal();
+            });
+        });
+
+        modal.querySelector('.modal__close').addEventListener('click', closeModal);
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('modal-overlay--open')) closeModal();
+        });
+
+        function clearAjaxErrors() {
+            if (!errorsBox) return;
+            errorsBox.hidden = true;
+            errorsBox.innerHTML = '';
+        }
+
+        function showAjaxErrors(errors) {
+            if (!errorsBox) return;
+            errorsBox.hidden = false;
+            errorsBox.innerHTML = errors.map(function(msg) {
+                return '<p class="modal__error">' + escapeHtml(msg) + '</p>';
+            }).join('');
+        }
+
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                clearAjaxErrors();
+
+                var fd = new FormData(form);
+                submitBtn.disabled = true;
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: fd,
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    credentials: 'same-origin'
+                })
+                .then(function(res) {
+                    return res.json()
+                        .then(function(data) {
+                            return { res: res, data: data };
+                        })
+                        .catch(function() {
+                            return { res: res, data: null };
+                        });
+                })
+                .then(function(payload) {
+                    var res = payload.res;
+                    var data = payload.data;
+                    if (res.ok && data && data.ok) {
+                        form.reset();
+                        closeModal();
+                        showNotification('Заявка успешно отправлена');
+                    } else if (data && data.errors && data.errors.length) {
+                        showAjaxErrors(data.errors);
+                        openModal();
+                    } else {
+                        showAjaxErrors(['Не удалось отправить заявку. Попробуйте ещё раз.']);
+                    }
+                })
+                .catch(function() {
+                    showAjaxErrors(['Ошибка сети. Проверьте подключение и попробуйте снова.']);
+                })
+                .finally(function() {
+                    submitBtn.disabled = false;
+                });
+            });
+        }
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        openModal();
+        {% endif %}
+        {% endwith %}
+    })();
+    </script>
+    <script src="{{ url_for('static', filename='site-nav.js') }}"></script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

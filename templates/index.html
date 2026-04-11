@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Svod — сервис управления заявками{% endblock %}
+
+{% block content %}
+{% include 'sections/hero.html' %}
+{% include 'sections/how_it_works.html' %}
+{% include 'sections/animation_section.html' %}
+{% include 'sections/usage_scenario.html' %}
+{% include 'sections/value_headline.html' %}
+{% include 'sections/team_change.html' %}
+{% include 'sections/video_section.html' %}
+{% include 'sections/pricing.html' %}
+{% include 'sections/cta.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<script src="{{ url_for('static', filename='how-it-works.js') }}" defer></script>
+<script src="{{ url_for('static', filename='pricing-toggle.js') }}" defer></script>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% from 'macros/ui_button.html' import ui_button %}
+<section class="cta" aria-labelledby="cta-title">
+    <div class="cta__background" aria-hidden="true"></div>
+    <div class="container cta__inner">
+        <div class="cta__card">
+            <div class="cta__header-bar">
+                <div class="cta__dots">
+                    <span class="cta__dot cta__dot--red"></span>
+                    <span class="cta__dot cta__dot--yellow"></span>
+                    <span class="cta__dot cta__dot--green"></span>
+                </div>
+            </div>
+            <div class="cta__content">
+                <h2 id="cta-title" class="cta__title text-h3">{{ content.get('cta_title', 'Возьмите заявки под контроль') }}</h2>
+                <p class="cta__subtitle text-body-m">
+                    {{ content.get('cta_description', 'Единая лента заявок, автоматическое распределение задач и прозрачные сроки — без хаоса в чатах и почте.') }}
+                </p>
+                <div class="cta__actions">
+                    {{ ui_button(content.get('cta_btn_primary', 'Начать бесплатно'), variant='primary', button_type='button') }}
+                    {{ ui_button(content.get('cta_btn_secondary', 'Связаться с нами'), href='#contact', variant='secondary') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

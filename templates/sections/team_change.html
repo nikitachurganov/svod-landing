@@ -1,0 +1,26 @@
+<div class="container">
+<section class="team-change" id="team-change" aria-labelledby="team-change-title">
+    <header class="team-change__header">
+        <h2 id="team-change-title" class="team-change__title text-h2">{{ content.get('team_title', 'Как меняется работа команды') }}</h2>
+        <p class="team-change__lead text-body-m">{{ content.get('team_description', 'От разрозненных заявок к управляемому потоку задач') }}</p>
+    </header>
+    <div class="team-change__grid">
+        <article class="team-change__card">
+            <p class="team-change__metric text-h1">{{ content.get('team_metric_1', '−70%') }}</p>
+            <p class="team-change__label text-body-s">{{ content.get('team_label_1', 'времени на сбор и пересылку заявок из разных каналов') }}</p>
+        </article>
+        <article class="team-change__card">
+            <p class="team-change__metric text-h1">{{ content.get('team_metric_2', '100%') }}</p>
+            <p class="team-change__label text-body-s">{{ content.get('team_label_2', 'заявок попадают в единую очередь с назначенным статусом') }}</p>
+        </article>
+        <article class="team-change__card">
+            <p class="team-change__metric text-h1">{{ content.get('team_metric_3', 'Авто') }}</p>
+            <p class="team-change__label text-body-s">{{ content.get('team_label_3', 'распределение задач по правилам без ручной сортировки') }}</p>
+        </article>
+        <article class="team-change__card">
+            <p class="team-change__metric text-h1">{{ content.get('team_metric_4', '1 экран') }}</p>
+            <p class="team-change__label text-body-s">{{ content.get('team_label_4', 'для контроля потока: кто взял задачу и до какого срока') }}</p>
+        </article>
+    </div>
+</section>
+</div>

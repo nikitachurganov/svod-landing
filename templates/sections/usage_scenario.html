@@ -1,0 +1,46 @@
+<div class="container">
+<section class="usage-scenario" id="audience" aria-labelledby="usage-scenario-title">
+    <header class="usage-scenario__header">
+        <h2 id="usage-scenario-title" class="usage-scenario__title text-h2">{{ content.get('usecase_title', 'Сценарий использования') }}</h2>
+    </header>
+    <div class="usage-scenario__grid">
+        <article class="usage-scenario__card">
+            <div class="usage-scenario__card-icon" aria-hidden="true">
+                <img class="usage-scenario__card-icon-img" src="{{ url_for('static', filename='icon-num-1.svg') }}" alt="">
+            </div>
+            <h3 class="usage-scenario__card-title text-h4">{{ content.get('usecase_1_title', 'Студия или агентство') }}</h3>
+            <p class="usage-scenario__card-text text-body-s">
+                {{ content.get('usecase_1_text', 'Клиенты оставляют бриф через форму: тип проекта, бюджет, сроки. Заявки не теряются в переписке — всё в одной ленте для менеджеров.') }}
+            </p>
+        </article>
+        <article class="usage-scenario__card">
+            <div class="usage-scenario__card-icon" aria-hidden="true">
+                <img class="usage-scenario__card-icon-img" src="{{ url_for('static', filename='icon-num-2.svg') }}" alt="">
+            </div>
+            <h3 class="usage-scenario__card-title text-h4">{{ content.get('usecase_2_title', 'Фрилансер и эксперт') }}</h3>
+            <p class="usage-scenario__card-text text-body-s">
+                {{ content.get('usecase_2_text', 'Заказы с сайта или соцсетей попадают в единый список: контакт, услуга, удобное время. Вы отвечаете по приоритету, а не по тому, кто громче написал в мессенджер.') }}
+            </p>
+        </article>
+        <article class="usage-scenario__card">
+            <div class="usage-scenario__card-icon" aria-hidden="true">
+                <img class="usage-scenario__card-icon-img" src="{{ url_for('static', filename='icon-num-3.svg') }}" alt="">
+            </div>
+            <h3 class="usage-scenario__card-title text-h4">{{ content.get('usecase_3_title', 'Сервис и поддержка') }}</h3>
+            <p class="usage-scenario__card-text text-body-s">
+                {{ content.get('usecase_3_text', 'Обращения с формы «Помощь» классифицируются по теме и попадают нужной линии поддержки. История видна всей команде, эскалации прозрачны.') }}
+            </p>
+        </article>
+        <article class="usage-scenario__card">
+            <div class="usage-scenario__card-icon" aria-hidden="true">
+                <img class="usage-scenario__card-icon-img" src="{{ url_for('static', filename='icon-num-4.svg') }}" alt="">
+            </div>
+            <h3 class="usage-scenario__card-title text-h4">{{ content.get('usecase_4_title', 'Малый бизнес') }}</h3>
+            <p class="usage-scenario__card-text text-body-s">
+                {{ content.get('usecase_4_text', 'Запись на услугу, предзаказ, обратный звонок — всё через одну форму на сайте. Владелец видит очередь заявок и статусы без таблиц и ручного учёта.') }}
+            </p>
+        </article>
+    </div>
+</section>
+
+</div>

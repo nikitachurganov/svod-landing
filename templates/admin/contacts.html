@@ -1,0 +1,53 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Заявки{% endblock %}
+{% block page_title %}Заявки{% endblock %}
+
+{% block content %}
+<div class="admin-stats">
+    <div class="admin-stat-card">
+        <span class="admin-stat-card__value">{{ stats.total }}</span>
+        <span class="admin-stat-card__label">Всего заявок</span>
+    </div>
+</div>
+
+{% if contacts %}
+<div class="admin-table-wrap">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>ФИО</th>
+                <th>Телефон</th>
+                <th>Email</th>
+                <th>Сфера</th>
+                <th>Должность</th>
+                <th>Дата</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in contacts %}
+            <tr>
+                <td>{{ c.id }}</td>
+                <td>{{ c.full_name }}</td>
+                <td>{{ c.phone }}</td>
+                <td><a href="mailto:{{ c.email }}">{{ c.email }}</a></td>
+                <td>{{ c.industry }}</td>
+                <td>{{ c.position }}</td>
+                <td class="admin-table__date">{{ c.created_at }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('admin.contact_delete', contact_id=c.id) }}"
+                          onsubmit="return confirm('Удалить заявку #{{ c.id }}?')">
+                        <button type="submit" class="admin-btn-delete" title="Удалить">✕</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<p class="admin-empty">Заявок пока нет.</p>
+{% endif %}
+{% endblock %}

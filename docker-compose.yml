@@ -1,0 +1,16 @@
+services:
+  backend:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - db-data:/app/data
+    environment:
+      - SECRET_KEY=change-me-in-production
+      - ADMIN_USER=admin
+      - ADMIN_PASS=admin
+      - DB_DIR=/app
+    restart: unless-stopped
+
+volumes:
+  db-data:

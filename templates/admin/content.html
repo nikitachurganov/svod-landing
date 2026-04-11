@@ -1,0 +1,183 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Контент{% endblock %}
+{% block page_title %}Редактирование контента{% endblock %}
+
+{% block content %}
+<form method="POST" class="ve">
+
+    {# ======== БАННЕР ОПРОСА ======== #}
+    <section class="ve-section">
+        <div class="ve-section__badge">Баннер опроса</div>
+        <div class="ve-block">
+            <label class="ve-label" for="survey_url">Ссылка «Пройти опрос»</label>
+            <p class="ve-hint text-description">Полный URL (https://…). Отображается в оранжевом баннере под шапкой.</p>
+            <input class="ve-input ve-input--body" type="url" id="survey_url" name="survey_url" value="{{ c.survey_url }}" placeholder="https://forms.google.com/…" autocomplete="off">
+        </div>
+    </section>
+
+    {# ======== HERO ======== #}
+    <section class="ve-section">
+        <div class="ve-section__badge">Hero</div>
+        <div class="ve-hero">
+            <div class="ve-hero__center">
+                <label class="ve-label" for="hero_title">Заголовок</label>
+                <textarea class="ve-input ve-input--display" id="hero_title" name="hero_title" rows="2">{{ c.hero_title }}</textarea>
+
+                <label class="ve-label" for="hero_description">Описание</label>
+                <textarea class="ve-input ve-input--body" id="hero_description" name="hero_description" rows="2">{{ c.hero_description }}</textarea>
+
+                <div class="ve-hero__actions">
+                    <div class="ve-inline">
+                        <label class="ve-label-sm" for="hero_btn_primary">Кнопка основная</label>
+                        <input class="ve-input ve-input--sm" id="hero_btn_primary" name="hero_btn_primary" value="{{ c.hero_btn_primary }}">
+                    </div>
+                    <div class="ve-inline">
+                        <label class="ve-label-sm" for="hero_btn_secondary">Кнопка вторичная</label>
+                        <input class="ve-input ve-input--sm" id="hero_btn_secondary" name="hero_btn_secondary" value="{{ c.hero_btn_secondary }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# ======== HOW IT WORKS ======== #}
+    <section class="ve-section">
+        <div class="ve-section__badge">Как это работает</div>
+
+        <div class="ve-block">
+            <label class="ve-label" for="how_title">Заголовок секции</label>
+            <input class="ve-input ve-input--h2" id="how_title" name="how_title" value="{{ c.how_title }}">
+            <label class="ve-label" for="how_description">Описание секции</label>
+            <textarea class="ve-input ve-input--body" id="how_description" name="how_description" rows="2">{{ c.how_description }}</textarea>
+        </div>
+
+        <div class="ve-how-grid">
+            <div class="ve-how-media"></div>
+            <div class="ve-how-steps">
+                {% for i in range(1, 5) %}
+                <div class="ve-how-step {% if loop.first %}ve-how-step--first{% endif %}">
+                    <div class="ve-how-step__header">
+                        <span class="ve-how-step__num">{{ i }}</span>
+                        <div class="ve-how-step__title-wrap">
+                            <label class="ve-label-sm" for="how_step_{{ i }}_title">Заголовок шага {{ i }}</label>
+                            <input class="ve-input ve-input--step" id="how_step_{{ i }}_title" name="how_step_{{ i }}_title" value="{{ c['how_step_' ~ i ~ '_title'] }}">
+                        </div>
+                    </div>
+                    <div class="ve-how-step__body">
+                        <div class="ve-how-step__sub">
+                            <span class="ve-how-step__sub-badge ve-how-step__sub-badge--with">С нами</span>
+                            <textarea class="ve-input ve-input--sm" name="how_step_{{ i }}_with" rows="2">{{ c['how_step_' ~ i ~ '_with'] }}</textarea>
+                        </div>
+                        <div class="ve-how-step__sub">
+                            <span class="ve-how-step__sub-badge ve-how-step__sub-badge--without">Без нас</span>
+                            <textarea class="ve-input ve-input--sm" name="how_step_{{ i }}_without" rows="2">{{ c['how_step_' ~ i ~ '_without'] }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {# ======== USAGE SCENARIOS ======== #}
+    <section class="ve-section">
+        <div class="ve-section__badge">Сценарии использования</div>
+
+        <div class="ve-block">
+            <label class="ve-label" for="usecase_title">Заголовок секции</label>
+            <input class="ve-input ve-input--h2" id="usecase_title" name="usecase_title" value="{{ c.usecase_title }}">
+        </div>
+
+        <div class="ve-usecase-grid">
+            {% for i in range(1, 5) %}
+            <div class="ve-usecase-card">
+                <span class="ve-usecase-card__num">{{ i }}</span>
+                <label class="ve-label-sm" for="usecase_{{ i }}_title">Заголовок</label>
+                <input class="ve-input ve-input--h4" id="usecase_{{ i }}_title" name="usecase_{{ i }}_title" value="{{ c['usecase_' ~ i ~ '_title'] }}">
+                <label class="ve-label-sm" for="usecase_{{ i }}_text">Текст</label>
+                <textarea class="ve-input ve-input--sm" id="usecase_{{ i }}_text" name="usecase_{{ i }}_text" rows="3">{{ c['usecase_' ~ i ~ '_text'] }}</textarea>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    {# ======== VALUE HEADLINE (LESS WORK) ======== #}
+    <section class="ve-section">
+        <div class="ve-section__badge">Меньше ручной работы</div>
+
+        <div class="ve-value-grid">
+            <div>
+                <label class="ve-label" for="less_work_title">Заголовок</label>
+                <textarea class="ve-input ve-input--h1" id="less_work_title" name="less_work_title" rows="2">{{ c.less_work_title }}</textarea>
+            </div>
+            <div>
+                <label class="ve-label" for="less_work_description">Описание</label>
+                <textarea class="ve-input ve-input--body" id="less_work_description" name="less_work_description" rows="2">{{ c.less_work_description }}</textarea>
+            </div>
+        </div>
+    </section>
+
+    {# ======== TEAM CHANGES ======== #}
+    <section class="ve-section">
+        <div class="ve-section__badge">Как меняется работа команды</div>
+
+        <div class="ve-block">
+            <label class="ve-label" for="team_title">Заголовок секции</label>
+            <input class="ve-input ve-input--h2" id="team_title" name="team_title" value="{{ c.team_title }}">
+            <label class="ve-label" for="team_description">Описание</label>
+            <input class="ve-input ve-input--body" id="team_description" name="team_description" value="{{ c.team_description }}">
+        </div>
+
+        <div class="ve-team-grid">
+            {% for i in range(1, 5) %}
+            <div class="ve-team-card">
+                <div>
+                    <label class="ve-label-sm" for="team_metric_{{ i }}">Метрика</label>
+                    <input class="ve-input ve-input--metric" id="team_metric_{{ i }}" name="team_metric_{{ i }}" value="{{ c['team_metric_' ~ i] }}">
+                </div>
+                <div>
+                    <label class="ve-label-sm" for="team_label_{{ i }}">Подпись</label>
+                    <textarea class="ve-input ve-input--sm" id="team_label_{{ i }}" name="team_label_{{ i }}" rows="2">{{ c['team_label_' ~ i] }}</textarea>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    {# ======== CTA ======== #}
+    <section class="ve-section">
+        <div class="ve-section__badge">CTA</div>
+
+        <div class="ve-cta">
+            <div class="ve-cta__bar">
+                <span class="ve-cta__dot ve-cta__dot--red"></span>
+                <span class="ve-cta__dot ve-cta__dot--yellow"></span>
+                <span class="ve-cta__dot ve-cta__dot--green"></span>
+            </div>
+            <div class="ve-cta__body">
+                <label class="ve-label" for="cta_title">Заголовок</label>
+                <input class="ve-input ve-input--h3" id="cta_title" name="cta_title" value="{{ c.cta_title }}">
+
+                <label class="ve-label" for="cta_description">Описание</label>
+                <textarea class="ve-input ve-input--body" id="cta_description" name="cta_description" rows="2">{{ c.cta_description }}</textarea>
+
+                <div class="ve-hero__actions">
+                    <div class="ve-inline">
+                        <label class="ve-label-sm" for="cta_btn_primary">Кнопка основная</label>
+                        <input class="ve-input ve-input--sm" id="cta_btn_primary" name="cta_btn_primary" value="{{ c.cta_btn_primary }}">
+                    </div>
+                    <div class="ve-inline">
+                        <label class="ve-label-sm" for="cta_btn_secondary">Кнопка вторичная</label>
+                        <input class="ve-input ve-input--sm" id="cta_btn_secondary" name="cta_btn_secondary" value="{{ c.cta_btn_secondary }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="ve-submit">
+        <button type="submit" class="ui-btn ui-btn--primary">Сохранить все изменения</button>
+    </div>
+</form>
+{% endblock %}

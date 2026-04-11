@@ -1,0 +1,9 @@
+{# Переиспользуемая кнопка: <a> при href, иначе <button>. #}
+{% macro ui_button(text, href=none, variant='primary', extra_class='', button_type='button') -%}
+{% set class_str = 'ui-btn ui-btn--' ~ variant ~ (' ' ~ extra_class if extra_class else '') %}
+{% if href %}
+<a href="{{ href }}" class="{{ class_str }}">{{ text }}</a>
+{% else %}
+<button type="{{ button_type }}" class="{{ class_str }}">{{ text }}</button>
+{% endif %}
+{%- endmacro %}

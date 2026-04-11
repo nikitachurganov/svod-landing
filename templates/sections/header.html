@@ -1,0 +1,14 @@
+{% from 'macros/ui_button.html' import ui_button %}
+<header class="site-header">
+    <div class="container site-header__inner">
+        <a class="site-header__logo" href="{{ url_for('main.index') }}">
+            <img class="site-header__logo-img" src="{{ url_for('static', filename='logo.svg') }}" width="67" height="17" alt="Svod">
+        </a>
+
+        {% include 'sections/header_nav.html' %}
+
+        <div class="site-header__actions">
+            {{ ui_button('Связаться с нами', href='#contact', variant='secondary') }}
+        </div>
+    </div>
+</header>
