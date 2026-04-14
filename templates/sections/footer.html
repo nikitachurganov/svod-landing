@@ -1,3 +1,41 @@
-<footer id="contact" class="text-description">
-    &copy; 2026 Svod. Учебный проект.
+{% from 'macros/ui_button.html' import ui_button %}
+<footer class="footer" id="contact">
+    <div class="container">
+        <div class="footer__top">
+            <div class="footer__column footer__column--brand">
+                <a class="footer__logo" href="{{ url_for('main.index') }}">
+                    <img class="footer__logo-img" src="{{ url_for('static', filename='logo.svg') }}" width="67" height="17" alt="SVOD">
+                </a>
+                <p class="footer__about text-body-s">
+                    Сервис для централизованного управления заявками и автоматизации процессов команды
+                </p>
+            </div>
+
+            <div class="footer__column">
+                <nav class="footer__nav" aria-label="Навигация в подвале">
+                    <ul class="footer__nav-list">
+                        <li><a class="footer__link text-body-s" href="#how">Как это работает</a></li>
+                        <li><a class="footer__link text-body-s" href="#audience">Для кого</a></li>
+                        <li><a class="footer__link text-body-s" href="#pricing">Цены</a></li>
+                        <li><a class="footer__link text-body-s" href="#contact">Контакты</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="footer__column">
+                <p class="footer__contact text-body-s">
+                    <a class="footer__link footer__link--email" href="mailto:support@svod.ru">support@svod.ru</a>
+                </p>
+            </div>
+
+            <div class="footer__column footer__column--cta">
+                {{ ui_button('Начать бесплатно', href='#contact', variant='primary', extra_class='footer__cta') }}
+            </div>
+        </div>
+
+        <div class="footer__bottom">
+            <p class="footer__copyright text-description">&copy; 2026 SVOD</p>
+            <a class="footer__legal text-description" href="/privacy">Политика конфиденциальности</a>
+        </div>
+    </div>
 </footer>

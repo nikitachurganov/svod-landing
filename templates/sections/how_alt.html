@@ -1,0 +1,130 @@
+<section class="how-alt" id="how" aria-labelledby="how-alt-title">
+    <div class="how-alt__sticky">
+        <div class="container how-alt__inner">
+            <header class="how-alt-header">
+                <h2 id="how-alt-title" class="how-alt-header__title text-h2">Как это работает</h2>
+                <p class="how-alt-header__desc text-body-m">
+                    Сервис собирает все запросы в одном месте, структурирует их и автоматически распределяет задачи по команде
+                </p>
+            </header>
+
+            <div class="how-alt__cards">
+                <!-- Card 1 -->
+                <article class="how-alt__card" data-card-index="0">
+                    <div class="how-alt__card-content">
+                        <div class="how-alt__card-top">
+                            <span class="how-alt__card-number text-body-s" aria-label="Шаг 1 из 4">
+                                <span class="how-alt__card-number-current">01</span><span class="how-alt__card-number-sep" aria-hidden="true"> / </span><span class="how-alt__card-number-total">04</span>
+                            </span>
+                            <h3 class="how-alt__card-title text-h3">Соберите все заявки в одном месте</h3>
+                        </div>
+                        <div class="how-alt__card-bottom">
+                            <div class="how-alt__card-copy">
+                                <p class="how-alt__card-old text-body-m">Заявки теряются в чатах, почте и таблицах — нет единого места для контроля</p>
+                                <p class="how-alt__card-desc text-body-m">Получайте запросы через формы вместо хаоса в чатах, почте и таблицах</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="how-alt__card-media">
+                        <img
+                            class="how-alt__card-img"
+                            src="{{ url_for('static', filename='table-image.png') }}"
+                            alt="Таблица заявок в сервисе"
+                            width="640"
+                            height="400"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="how-alt__card" data-card-index="1">
+                    <div class="how-alt__card-content">
+                        <div class="how-alt__card-top">
+                            <span class="how-alt__card-number text-body-s" aria-label="Шаг 2 из 4">
+                                <span class="how-alt__card-number-current">02</span><span class="how-alt__card-number-sep" aria-hidden="true"> / </span><span class="how-alt__card-number-total">04</span>
+                            </span>
+                            <h3 class="how-alt__card-title text-h3">Структурируйте входящий поток</h3>
+                        </div>
+                        <div class="how-alt__card-bottom">
+                            <div class="how-alt__card-copy">
+                                <p class="how-alt__card-old text-body-m">Разрозненные треды и файлы: сложно понять приоритет и не потерять запрос</p>
+                                <p class="how-alt__card-desc text-body-m">Теги, статусы и единый формат заявок — сразу видно, что в работе и что просрочено</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="how-alt__card-media">
+                        <img
+                            class="how-alt__card-img"
+                            src="{{ url_for('static', filename='02-image.png') }}"
+                            alt="Структура и статусы заявок"
+                            width="640"
+                            height="400"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="how-alt__card" data-card-index="2">
+                    <div class="how-alt__card-content">
+                        <div class="how-alt__card-top">
+                            <span class="how-alt__card-number text-body-s" aria-label="Шаг 3 из 4">
+                                <span class="how-alt__card-number-current">03</span><span class="how-alt__card-number-sep" aria-hidden="true"> / </span><span class="how-alt__card-number-total">04</span>
+                            </span>
+                            <h3 class="how-alt__card-title text-h3">Автоматически распределяйте задачи</h3>
+                        </div>
+                        <div class="how-alt__card-bottom">
+                            <div class="how-alt__card-copy">
+                                <p class="how-alt__card-old text-body-m">Кто возьмёт задачу — решается в переписке, нагрузка распределяется неравномерно</p>
+                                <p class="how-alt__card-desc text-body-m">Правила и очереди назначают исполнителя без ручных пересылок и уточнений</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="how-alt__card-media">
+                        <img
+                            class="how-alt__card-img"
+                            src="{{ url_for('static', filename='03-image.png') }}"
+                            alt="Распределение задач по команде"
+                            width="640"
+                            height="400"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </div>
+                </article>
+
+                <!-- Card 4 -->
+                <article class="how-alt__card" data-card-index="3">
+                    <div class="how-alt__card-content">
+                        <div class="how-alt__card-top">
+                            <span class="how-alt__card-number text-body-s" aria-label="Шаг 4 из 4">
+                                <span class="how-alt__card-number-current">04</span><span class="how-alt__card-number-sep" aria-hidden="true"> / </span><span class="how-alt__card-number-total">04</span>
+                            </span>
+                            <h3 class="how-alt__card-title text-h3">Контролируйте выполнение</h3>
+                        </div>
+                        <div class="how-alt__card-bottom">
+                            <div class="how-alt__card-copy">
+                                <p class="how-alt__card-old text-body-m">Сложно отследить, на каком этапе запрос и кто за него отвечает</p>
+                                <p class="how-alt__card-desc text-body-m">Сроки, напоминания и история по каждой заявке — статус прозрачен для всех</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="how-alt__card-media">
+                        <img
+                            class="how-alt__card-img"
+                            src="{{ url_for('static', filename='04-image.png') }}"
+                            alt="Контроль сроков и статусов заявок"
+                            width="640"
+                            height="400"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>

@@ -129,7 +129,7 @@
     --transition-fast: 0.15s ease;
     --transition-normal: 0.3s ease;
 
-    --layout-section-gap: 200px;
+    --layout-section-gap: 280px;
 
     /* Fixed header: высота полосы + нижняя граница */
     --site-header-height: calc(72px + 1px);
@@ -147,13 +147,13 @@
         --font-h1-size: 34px;
         --font-h1-line: 40px;
 
-        --layout-section-gap: 120px;
+        --layout-section-gap: 168px;
     }
 }
 
 @media (max-width: 480px) {
     :root {
-        --layout-section-gap: 80px;
+        --layout-section-gap: 112px;
         /* Баннер может стать выше из‑за переноса — запас под padding-top и scroll-margin */
         --site-top-banner-height: 72px;
         --site-header-scroll-margin: calc(var(--site-header-stack-height) + 16px);
@@ -222,6 +222,28 @@ a {
 /* ——— Main layout (отступы между блоками лендинга) ——— */
 main > *:not(:last-child) {
     margin-bottom: var(--layout-section-gap);
+}
+
+/* Секция «Как это работает» (how-alt): без margin-bottom до следующего блока */
+main > .how-alt:not(:last-child) {
+    margin-bottom: 0;
+}
+
+/* Hero → следующий блок: меньше, чем общий layout-section-gap */
+main > *:first-child:not(:only-child):not(:last-child) {
+    margin-bottom: 96px;
+}
+
+@media (max-width: 768px) {
+    main > *:first-child:not(:only-child):not(:last-child) {
+        margin-bottom: 72px;
+    }
+}
+
+@media (max-width: 480px) {
+    main > *:first-child:not(:only-child):not(:last-child) {
+        margin-bottom: 48px;
+    }
 }
 
 main .container {
@@ -1671,11 +1693,161 @@ p a:hover {
 }
 
 /* ——— Footer (template: sections/footer.html) ——— */
-footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: var(--layout-section-gap);
+.footer {
+    margin-top: 0;
+    padding: 56px 0 32px;
+    background-color: var(--color-surface-muted);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+}
+
+.footer__top {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+    gap: 40px 32px;
+    padding-bottom: 40px;
+}
+
+.footer__column {
+    min-width: 0;
+}
+
+.footer__column--brand {
+    padding-right: 24px;
+}
+
+.footer__column--cta {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+
+.footer__column--cta .footer__cta {
+    margin-top: 0;
+}
+
+.footer__logo {
+    display: inline-block;
+    line-height: 0;
+    margin-bottom: 16px;
+}
+
+.footer__logo:hover .footer__logo-img {
+    opacity: 0.85;
+}
+
+.footer__logo-img {
+    display: block;
+    height: 20px;
+    width: auto;
+    transition: opacity var(--transition-fast);
+}
+
+.footer__about {
+    margin: 0;
+    max-width: 22rem;
+    color: var(--color-text-secondary);
+    line-height: var(--font-body-m-line);
+}
+
+.footer__nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer__link {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.footer__link:hover {
+    color: var(--color-primary);
+}
+
+.footer__link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.footer__link--email {
+    color: var(--color-link);
+    word-break: break-all;
+}
+
+.footer__link--email:hover {
+    color: var(--color-link-hover);
+}
+
+.footer__contact {
+    margin: 0;
+}
+
+.footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-border);
+}
+
+.footer__copyright {
+    margin: 0;
     color: var(--color-text-subtle);
+}
+
+.footer__legal {
+    margin: 0;
+    color: var(--color-text-subtle);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.footer__legal:hover {
+    color: var(--color-text-secondary);
+}
+
+.footer__legal:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+    .footer__top {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .footer__column--brand {
+        grid-column: 1 / -1;
+        padding-right: 0;
+    }
+}
+
+@media (max-width: 560px) {
+    .footer {
+        padding: 40px 0 28px;
+    }
+
+    .footer__top {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding-bottom: 32px;
+    }
+
+    .footer__column--cta {
+        justify-content: flex-start;
+    }
+
+    .footer__bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
 /* ——— Contact modal ——— */
@@ -1862,3 +2034,227 @@ select.modal__input {
     background-color: var(--color-primary-subtle);
     border-color: var(--color-primary-200);
 }
+
+/* ——— How Alt — Header (template: sections/how_alt.html) ——— */
+.how-alt__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    position: relative;
+    gap: 160px;
+}
+
+.how-alt-header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 36rem;
+    align-self: center;
+    flex-shrink: 0;
+}
+
+.how-alt-header__title {
+    margin: 0 0 16px;
+    letter-spacing: -0.02em;
+    color: var(--color-heading-strong);
+}
+
+.how-alt-header__desc {
+    margin: 0;
+    color: var(--color-text-secondary);
+}
+
+/* ——— How Alt — Stacked scroll cards ——— */
+.how-alt {
+    position: relative;
+    height: 300vh;
+}
+
+.how-alt__sticky {
+    position: sticky;
+    top: var(--site-header-stack-height);
+    height: calc(100vh - var(--site-header-stack-height));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.how-alt__cards {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 964px;
+    height: 420px;
+    margin-left: auto;
+    margin-right: auto;
+    will-change: transform;
+}
+
+.how-alt__card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 420px;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 0;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    will-change: transform;
+}
+
+.how-alt__card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 0;
+    padding: 28px 28px;
+}
+
+.how-alt__card-top {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.how-alt__card-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex-shrink: 0;
+}
+
+.how-alt__card-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.how-alt__card-number {
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.04em;
+}
+
+.how-alt__card-number-current {
+    color: var(--color-text-primary);
+}
+
+.how-alt__card-number-sep {
+    color: var(--color-text-subtle);
+}
+
+.how-alt__card-number-total {
+    color: var(--color-text-subtle);
+}
+
+.how-alt__card-title {
+    margin: 0;
+    letter-spacing: -0.02em;
+    color: var(--color-heading-strong);
+}
+
+.how-alt__card-old {
+    margin: 0;
+    color: var(--color-gray-400);
+    text-decoration: line-through;
+}
+
+.how-alt__card-desc {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-regular);
+}
+
+.how-alt__card-media {
+    position: relative;
+    align-self: stretch;
+    min-height: 0;
+    border-left: 1px solid var(--color-border);
+    overflow: hidden;
+}
+
+.how-alt__card-img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Mobile: disable stacked effect, show as list */
+@media (max-width: 900px) {
+    .how-alt {
+        height: auto;
+    }
+
+    .how-alt__inner {
+        gap: 24px;
+    }
+
+    .how-alt__sticky {
+        position: relative;
+        top: auto;
+        height: auto;
+        display: block;
+        overflow: visible;
+    }
+
+    .how-alt__cards {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        height: auto;
+        padding-bottom: 24px;
+    }
+
+    .how-alt__card {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        height: auto;
+        transform: none !important;
+        z-index: auto !important;
+        grid-template-columns: 1fr;
+    }
+
+    .how-alt__card-content {
+        padding: 28px 24px;
+        justify-content: flex-start;
+        gap: 24px;
+    }
+
+    .how-alt__card-bottom {
+        gap: 24px;
+    }
+
+    .how-alt__card-copy {
+        gap: 12px;
+    }
+
+    .how-alt__card-media {
+        border-left: none;
+        border-top: 1px solid var(--color-border);
+        height: 240px;
+        min-height: 240px;
+    }
+}
+
+@media (max-width: 480px) {
+    .how-alt__card-content {
+        padding: 20px 16px;
+    }
+
+    .how-alt__card-title {
+        font-size: var(--font-h4-size);
+        line-height: var(--font-h4-line);
+    }
+}
+
