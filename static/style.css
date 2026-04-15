@@ -414,7 +414,7 @@ main > *:only-child {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 1060;
     width: 100%;
     transform: translateY(0);
     transition: transform 0.3s ease;
@@ -1850,37 +1850,194 @@ p a:hover {
     }
 }
 
-/* ——— Contact modal ——— */
-.modal-overlay {
+/* ——— Contact panel (выпадает из шапки, templates: contact_panel.html) ——— */
+.contact-backdrop {
     position: fixed;
-    inset: 0;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    top: var(--site-header-stack-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1040;
     background-color: rgba(0, 0, 0, 0.45);
     backdrop-filter: blur(4px);
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.25s ease, visibility 0.25s ease;
+    pointer-events: none;
 }
 
-.modal-overlay--open {
+.contact-backdrop--open {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
 }
 
-.modal {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
-    max-height: 90vh;
+.contact-panel {
+    position: fixed;
+    top: var(--site-header-stack-height);
+    left: 0;
+    right: 0;
+    z-index: 1055;
+    max-height: min(88vh, 680px);
+    overflow-x: hidden;
     overflow-y: auto;
-    margin: 20px;
-    padding: 36px 32px 32px;
+    -webkit-overflow-scrolling: touch;
     background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.14);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-100%);
+    transition:
+        opacity 0.22s ease,
+        visibility 0.22s ease,
+        transform 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.contact-panel--open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.contact-panel__inner {
+    position: relative;
+    padding: 28px 32px 48px;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.contact-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 0 6px;
+}
+
+.contact-panel__header .modal__title {
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+}
+
+.contact-panel__header .modal__close {
+    position: static;
+    flex-shrink: 0;
+    border-radius: 0;
+}
+
+.contact-panel__form {
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+
+.contact-panel__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.contact-panel__grid-spacer {
+    min-height: 0;
+    pointer-events: none;
+}
+
+.contact-panel__grid .modal__field--rating {
+    grid-column: 1;
+    min-width: 0;
+}
+
+.contact-panel__grid .modal__field--comment {
+    grid-column: 1;
+    min-width: 0;
+}
+
+.contact-panel__grid .modal__scale {
+    width: 100%;
+    gap: 0;
+    flex-wrap: nowrap;
+}
+
+.contact-panel__grid .modal__scale .modal__scale-item {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.contact-panel__grid .modal__scale .modal__scale-item:not(:first-child) {
+    margin-left: -1px;
+}
+
+.contact-panel__grid .modal__scale .modal__scale-item:focus-within {
+    z-index: 2;
+}
+
+.contact-panel__grid .modal__scale .modal__scale-face {
+    width: 100%;
+    min-width: 0;
+    height: 40px;
+}
+
+.contact-panel__submit {
+    margin-top: 4px;
+    width: auto;
+    align-self: flex-start;
+}
+
+.modal__field--rating {
+    width: 100%;
+}
+
+.modal__scale--left {
+    justify-content: flex-start;
+}
+
+.modal__scale--left .modal__scale-item {
+    flex: 0 0 auto;
+}
+
+.modal__textarea {
+    height: 120px;
+    min-height: 120px;
+    max-height: 120px;
+    resize: none;
+    line-height: 1.45;
+    box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+    .contact-panel__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-panel__grid .modal__field--rating,
+    .contact-panel__grid .modal__field--comment {
+        grid-column: 1;
+    }
+
+    .contact-panel__grid-spacer {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-panel__inner {
+        padding: 24px 20px 48px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .contact-backdrop,
+    .contact-panel {
+        transition-duration: 0.01ms;
+    }
 }
 
 .modal__close {
@@ -1951,6 +2108,11 @@ p a:hover {
     color: var(--color-text-primary);
 }
 
+.modal__optional {
+    font-weight: var(--font-weight-regular);
+    color: var(--color-text-secondary);
+}
+
 .modal__input {
     padding: 10px 14px;
     font-family: var(--font-family-base);
@@ -1977,16 +2139,64 @@ select.modal__input {
     cursor: pointer;
 }
 
-.modal__submit {
-    margin-top: 4px;
-    width: 100%;
+.modal__scale {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
 }
 
-@media (max-width: 480px) {
-    .modal {
-        padding: 28px 20px 24px;
-        margin: 12px;
-    }
+.modal__scale-item {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.modal__scale-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.modal__scale-face {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    font-size: var(--font-body-s-size);
+    line-height: 1;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    cursor: pointer;
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.modal__scale-item:hover .modal__scale-face {
+    border-color: var(--color-primary-300);
+    background-color: var(--color-primary-50);
+}
+
+.modal__scale-input:checked + .modal__scale-face {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-50);
+    color: var(--color-primary-600);
+}
+
+.modal__scale-input:focus-visible + .modal__scale-face {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
 }
 
 /* ——— Toast notifications ——— */

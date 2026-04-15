@@ -22,7 +22,7 @@
     </main>
 
     {% include 'sections/footer.html' %}
-    {% include 'sections/contact_modal.html' %}
+    {% include 'sections/contact_panel.html' %}
 
     <script>
     (function() {
@@ -51,36 +51,56 @@
             }, 3600);
         }
 
-        var modal = document.getElementById('contactModal');
-        if (!modal) return;
+        var panel = document.getElementById('contactPanel');
+        var backdrop = document.getElementById('contactBackdrop');
+        if (!panel || !backdrop) return;
 
         var form = document.getElementById('contactForm');
         var errorsBox = document.getElementById('contactFormErrors');
         var submitBtn = document.getElementById('contactFormSubmit');
 
-        function closeModal() {
-            modal.classList.remove('modal-overlay--open');
+        function closeContactPanel() {
+            panel.classList.remove('contact-panel--open');
+            backdrop.classList.remove('contact-backdrop--open');
+            panel.setAttribute('aria-hidden', 'true');
+            backdrop.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
+            if (typeof window.unlockSiteTop === 'function') {
+                window.unlockSiteTop();
+            }
+            clearAjaxErrors();
+            if (form) {
+                form.reset();
+                if (typeof window.resetContactPhoneField === 'function') {
+                    window.resetContactPhoneField();
+                }
+            }
         }
 
-        function openModal() {
-            modal.classList.add('modal-overlay--open');
+        function openContactPanel() {
+            if (typeof window.lockSiteTopVisible === 'function') {
+                window.lockSiteTopVisible();
+            }
+            panel.setAttribute('aria-hidden', 'false');
+            backdrop.setAttribute('aria-hidden', 'false');
+            requestAnimationFrame(function() {
+                panel.classList.add('contact-panel--open');
+                backdrop.classList.add('contact-backdrop--open');
+            });
             document.body.style.overflow = 'hidden';
         }
 
         document.querySelectorAll('a[href="#contact"], button[data-contact]').forEach(function(el) {
             el.addEventListener('click', function(e) {
                 e.preventDefault();
-                openModal();
+                openContactPanel();
             });
         });
 
-        modal.querySelector('.modal__close').addEventListener('click', closeModal);
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) closeModal();
-        });
+        panel.querySelector('.contact-panel__close').addEventListener('click', closeContactPanel);
+        backdrop.addEventListener('click', closeContactPanel);
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && modal.classList.contains('modal-overlay--open')) closeModal();
+            if (e.key === 'Escape' && panel.classList.contains('contact-panel--open')) closeContactPanel();
         });
 
         function clearAjaxErrors() {
@@ -124,12 +144,11 @@
                     var res = payload.res;
                     var data = payload.data;
                     if (res.ok && data && data.ok) {
-                        form.reset();
-                        closeModal();
+                        closeContactPanel();
                         showNotification('Заявка успешно отправлена');
                     } else if (data && data.errors && data.errors.length) {
                         showAjaxErrors(data.errors);
-                        openModal();
+                        openContactPanel();
                     } else {
                         showAjaxErrors(['Не удалось отправить заявку. Попробуйте ещё раз.']);
                     }
@@ -145,11 +164,12 @@
 
         {% with messages = get_flashed_messages() %}
         {% if messages %}
-        openModal();
+        openContactPanel();
         {% endif %}
         {% endwith %}
     })();
     </script>
+    <script src="{{ url_for('static', filename='contact-phone.js') }}"></script>
     <script src="{{ url_for('static', filename='site-nav.js') }}"></script>
 
     {% block scripts %}{% endblock %}

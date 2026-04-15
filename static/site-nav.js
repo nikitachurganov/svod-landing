@@ -6,11 +6,24 @@
     var threshold = 14;
     var topZone = 40;
     var ticking = false;
+    var locked = false;
 
     function setTopHidden(hidden) {
+        if (locked) return;
         topBar.classList.toggle("site-top--hidden", hidden);
         topBar.classList.toggle("site-top--visible", !hidden);
     }
+
+    window.lockSiteTopVisible = function () {
+        locked = true;
+        topBar.classList.remove("site-top--hidden");
+        topBar.classList.add("site-top--visible");
+    };
+
+    window.unlockSiteTop = function () {
+        locked = false;
+        lastY = window.scrollY;
+    };
 
     function onScrollFrame() {
         ticking = false;

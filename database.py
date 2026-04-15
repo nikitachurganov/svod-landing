@@ -116,6 +116,7 @@ def init_db():
             email      TEXT    NOT NULL,
             industry   TEXT    NOT NULL,
             position   TEXT    NOT NULL,
+            rating     INTEGER,
             created_at TEXT    NOT NULL
         );
 
@@ -143,8 +144,50 @@ def init_db():
             (key, value),
         )
     _seed_pricing_if_empty(conn)
+    _ensure_contact_rating_column(conn)
+    _ensure_contact_name_columns(conn)
+    _ensure_contact_comment_column(conn)
     conn.commit()
     conn.close()
+
+
+def _ensure_contact_rating_column(conn):
+    cols = {row[1] for row in conn.execute("PRAGMA table_info(contacts)").fetchall()}
+    if "rating" not in cols:
+        conn.execute("ALTER TABLE contacts ADD COLUMN rating INTEGER")
+
+
+def _split_ru_full_name(full_name: str):
+    parts = (full_name or "").split()
+    if len(parts) >= 3:
+        return parts[0], parts[1], " ".join(parts[2:])
+    if len(parts) == 2:
+        return parts[0], parts[1], None
+    if len(parts) == 1:
+        return parts[0], "", None
+    return "", "", None
+
+
+def _ensure_contact_name_columns(conn):
+    cols = {row[1] for row in conn.execute("PRAGMA table_info(contacts)").fetchall()}
+    if "last_name" in cols:
+        return
+    conn.execute("ALTER TABLE contacts ADD COLUMN last_name TEXT")
+    conn.execute("ALTER TABLE contacts ADD COLUMN first_name TEXT")
+    conn.execute("ALTER TABLE contacts ADD COLUMN patronymic TEXT")
+    rows = conn.execute("SELECT id, full_name FROM contacts").fetchall()
+    for r in rows:
+        ln, fn, pt = _split_ru_full_name(r["full_name"] or "")
+        conn.execute(
+            "UPDATE contacts SET last_name=?, first_name=?, patronymic=? WHERE id=?",
+            (ln or "", fn or "", pt, r["id"]),
+        )
+
+
+def _ensure_contact_comment_column(conn):
+    cols = {row[1] for row in conn.execute("PRAGMA table_info(contacts)").fetchall()}
+    if "comment" not in cols:
+        conn.execute("ALTER TABLE contacts ADD COLUMN comment TEXT")
 
 
 def _seed_pricing_if_empty(conn):
@@ -190,12 +233,28 @@ def _seed_pricing_if_empty(conn):
 
 # --- Contacts ---
 
-def create_contact(full_name, phone, email, industry, position):
+def create_contact(last_name, first_name, patronymic, phone, email, rating, comment):
     conn = _get_conn()
+    pt = (patronymic or "").strip() or None
+    full_display = " ".join(p for p in (last_name, first_name, pt) if p)
+    cm = (comment or "").strip() or None
     conn.execute(
-        """INSERT INTO contacts (full_name, phone, email, industry, position, created_at)
-           VALUES (?, ?, ?, ?, ?, ?)""",
-        (full_name, phone, email, industry, position, datetime.now().isoformat(sep=" ", timespec="seconds")),
+        """INSERT INTO contacts (
+               last_name, first_name, patronymic,
+               full_name, phone, email, industry, position, rating, comment, created_at
+           )
+           VALUES (?, ?, ?, ?, ?, ?, '', '', ?, ?, ?)""",
+        (
+            last_name,
+            first_name,
+            pt,
+            full_display,
+            phone,
+            email,
+            rating,
+            cm,
+            datetime.now().isoformat(sep=" ", timespec="seconds"),
+        ),
     )
     conn.commit()
     conn.close()

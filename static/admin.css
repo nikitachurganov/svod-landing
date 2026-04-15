@@ -196,6 +196,13 @@
     font-variant-numeric: tabular-nums;
 }
 
+.admin-table__comment {
+    white-space: normal;
+    max-width: 20rem;
+    word-break: break-word;
+    line-height: 1.4;
+}
+
 /* ——— Delete button ——— */
 .admin-btn-delete {
     display: inline-flex;

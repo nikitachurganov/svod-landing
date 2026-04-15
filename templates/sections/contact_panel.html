@@ -1,0 +1,64 @@
+<div class="contact-backdrop" id="contactBackdrop" aria-hidden="true"></div>
+<div class="contact-panel" id="contactPanel" role="dialog" aria-modal="true" aria-labelledby="contact-panel-title" aria-hidden="true">
+    <div class="container contact-panel__inner">
+        <div class="contact-panel__header">
+            <h2 class="modal__title text-h3" id="contact-panel-title">Попробуйте сервис в работе</h2>
+            <button type="button" class="contact-panel__close modal__close" aria-label="Закрыть">&times;</button>
+        </div>
+        <p class="modal__subtitle text-body-s">Заполните форму — мы свяжемся и покажем, как это работает</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="modal__errors">
+            {% for category, message in messages %}
+            <p class="modal__error">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <div class="modal__errors modal__errors--ajax" id="contactFormErrors" hidden></div>
+
+        <form method="POST" action="{{ url_for('main.contact') }}" class="modal__form contact-panel__form" id="contactForm">
+            <div class="contact-panel__grid">
+                <div class="modal__field">
+                    <label class="modal__label" for="last_name">Фамилия</label>
+                    <input class="modal__input" type="text" id="last_name" name="last_name" placeholder="Иванов" autocomplete="family-name" required>
+                </div>
+                <div class="modal__field">
+                    <label class="modal__label" for="first_name">Имя</label>
+                    <input class="modal__input" type="text" id="first_name" name="first_name" placeholder="Иван" autocomplete="given-name" required>
+                </div>
+                <div class="modal__field">
+                    <label class="modal__label" for="patronymic">Отчество <span class="modal__optional">(необязательно)</span></label>
+                    <input class="modal__input" type="text" id="patronymic" name="patronymic" placeholder="Иванович" autocomplete="additional-name">
+                </div>
+                <div class="modal__field">
+                    <label class="modal__label" for="phone">Номер телефона</label>
+                    <input class="modal__input" type="tel" id="phone" name="phone" inputmode="numeric" autocomplete="tel" placeholder="+7 (___) ___ - __ - __" maxlength="22" required>
+                </div>
+                <div class="modal__field">
+                    <label class="modal__label" for="email">Email</label>
+                    <input class="modal__input" type="email" id="email" name="email" placeholder="name@company.com" autocomplete="email" required>
+                </div>
+                <div class="contact-panel__grid-spacer" aria-hidden="true"></div>
+                <div class="modal__field modal__field--rating">
+                    <span class="modal__label" id="contact-rating-label">Укажите на сколько вы заинтересованы в продукте</span>
+                    <div class="modal__scale modal__scale--left" role="radiogroup" aria-labelledby="contact-rating-label">
+                        {% for n in range(1, 11) %}
+                        <label class="modal__scale-item">
+                            <input type="radio" name="rating" value="{{ n }}" class="modal__scale-input" {% if n == 1 %}required{% endif %}>
+                            <span class="modal__scale-face">{{ n }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="modal__field modal__field--comment">
+                    <label class="modal__label" for="comment">Комментарий</label>
+                    <textarea class="modal__input modal__textarea" id="comment" name="comment" placeholder="Опишите ваш вопрос или предложение" maxlength="2000"></textarea>
+                </div>
+            </div>
+            <button type="submit" class="ui-btn ui-btn--primary contact-panel__submit" id="contactFormSubmit">Отправить</button>
+        </form>
+    </div>
+</div>

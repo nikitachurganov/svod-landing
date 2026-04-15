@@ -17,11 +17,13 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>ФИО</th>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
                 <th>Телефон</th>
                 <th>Email</th>
-                <th>Сфера</th>
-                <th>Должность</th>
+                <th>Комментарий</th>
+                <th>Оценка</th>
                 <th>Дата</th>
                 <th></th>
             </tr>
@@ -30,11 +32,13 @@
             {% for c in contacts %}
             <tr>
                 <td>{{ c.id }}</td>
-                <td>{{ c.full_name }}</td>
+                <td>{{ c.last_name or c.full_name or '—' }}</td>
+                <td>{{ c.first_name or '—' }}</td>
+                <td>{% if c.patronymic %}{{ c.patronymic }}{% else %}—{% endif %}</td>
                 <td>{{ c.phone }}</td>
                 <td><a href="mailto:{{ c.email }}">{{ c.email }}</a></td>
-                <td>{{ c.industry }}</td>
-                <td>{{ c.position }}</td>
+                <td class="admin-table__comment">{% if c.comment %}{{ c.comment }}{% else %}—{% endif %}</td>
+                <td>{% if c.rating is not none %}{{ c.rating }}{% else %}—{% endif %}</td>
                 <td class="admin-table__date">{{ c.created_at }}</td>
                 <td>
                     <form method="POST" action="{{ url_for('admin.contact_delete', contact_id=c.id) }}"
