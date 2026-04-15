@@ -1,0 +1,94 @@
+<section class="section-integrations" aria-labelledby="integrations-title">
+    <div class="container integrations__container">
+        <div class="integrations__left">
+            <h2 id="integrations-title" class="integrations__heading text-h2">
+                Интеграции с вашими рабочими инструментами
+            </h2>
+            <p class="integrations__lead text-body-m">
+                Собирайте заявки из разных каналов в одном месте — без ручного копирования и потерь
+            </p>
+        </div>
+
+        <div class="integrations__right">
+            <article class="integration-card">
+                <div class="integration-card__header">
+                    <div class="integration-card__icon">
+                        <img
+                            class="integration-card__icon-img"
+                            src="{{ url_for('static', filename='yandex mail.svg') }}"
+                            alt=""
+                            width="40"
+                            height="40"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </div>
+                    <h3 class="integration-card__title text-h4">Яндекс Почта</h3>
+                </div>
+                <p class="integration-card__desc text-body-s">
+                    Автоматически превращает входящие письма в заявки
+                </p>
+            </article>
+
+            <article class="integration-card">
+                <div class="integration-card__header">
+                    <div class="integration-card__icon">
+                        <img
+                            class="integration-card__icon-img"
+                            src="{{ url_for('static', filename='tg.svg') }}"
+                            alt=""
+                            width="40"
+                            height="40"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </div>
+                    <h3 class="integration-card__title text-h4">Телеграм</h3>
+                </div>
+                <p class="integration-card__desc text-body-s">
+                    Заявки из чатов и ботов сразу попадают в систему
+                </p>
+            </article>
+
+            <article class="integration-card">
+                <div class="integration-card__header">
+                    <div class="integration-card__icon">
+                        <img
+                            class="integration-card__icon-img"
+                            src="{{ url_for('static', filename='yougile.svg') }}"
+                            alt=""
+                            width="40"
+                            height="40"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </div>
+                    <h3 class="integration-card__title text-h4">YouGile</h3>
+                </div>
+                <p class="integration-card__desc text-body-s">
+                    Передавайте заявки в задачи и доски YouGile без ручного дублирования
+                </p>
+            </article>
+
+            <article class="integration-card">
+                <div class="integration-card__header">
+                    <div class="integration-card__icon">
+                        <img
+                            class="integration-card__icon-img"
+                            src="{{ url_for('static', filename='yandex forms.svg') }}"
+                            alt=""
+                            width="40"
+                            height="40"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </div>
+                    <h3 class="integration-card__title text-h4">Яндекс Формы</h3>
+                </div>
+                <p class="integration-card__desc text-body-s">
+                    Собирайте заявки через формы и обрабатывайте их централизованно
+                </p>
+            </article>
+        </div>
+    </div>
+</section>

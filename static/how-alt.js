@@ -1,7 +1,6 @@
 (function () {
     "use strict";
 
-    var MOBILE_BREAKPOINT = 900;
     var section = document.querySelector(".how-alt");
     if (!section) return;
 
@@ -14,10 +13,6 @@
     var ticking = false;
     var movingCards = cardCount > 1 ? cards.slice(1) : [];
     var segmentCount = movingCards.length;
-
-    function isMobile() {
-        return window.innerWidth <= MOBILE_BREAKPOINT;
-    }
 
     function getGapPx() {
         if (!innerEl) return 160;
@@ -38,7 +33,6 @@
     }
 
     function onScroll() {
-        if (isMobile()) return;
         if (ticking) return;
 
         ticking = true;
@@ -82,16 +76,8 @@
     }
 
     function handleResize() {
-        if (isMobile()) {
-            if (cardsWrap) cardsWrap.style.transform = "";
-            cards.forEach(function (card) {
-                card.style.transform = "";
-                card.style.zIndex = "";
-            });
-        } else {
-            applyInitialState();
-            onScroll();
-        }
+        applyInitialState();
+        onScroll();
     }
 
     applyInitialState();

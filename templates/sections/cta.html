@@ -1,6 +1,8 @@
 {% from 'macros/ui_button.html' import ui_button %}
 <section class="cta" aria-labelledby="cta-title">
-    <div class="cta__background" aria-hidden="true"></div>
+    <div class="cta__background" aria-hidden="true">
+        <img class="cta__background-img" src="{{ url_for('static', filename='form-bg.svg') }}" alt="" width="1440" height="620" decoding="async">
+    </div>
     <div class="container cta__inner">
         <div class="cta__card">
             <div class="cta__header-bar">
