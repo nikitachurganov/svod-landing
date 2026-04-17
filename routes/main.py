@@ -1,7 +1,12 @@
 import re
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 
-from database import create_contact, get_content_dict, get_pricing
+from database import (
+    create_contact,
+    create_early_access,
+    get_content_dict,
+    get_pricing,
+)
 
 main_bp = Blueprint("main", __name__)
 
@@ -89,3 +94,31 @@ def contact():
 @main_bp.route("/success")
 def success():
     return render_template("success.html")
+
+
+TELEGRAM_RE = re.compile(r"^@?[A-Za-z0-9_]{4,32}$")
+
+
+@main_bp.route("/early-access", methods=["POST"])
+def early_access():
+    raw = (request.form.get("contact") or "").strip()
+    errors = []
+    kind = None
+    normalized = raw
+
+    if not raw:
+        errors.append("Укажите email или ник в Telegram (@username)")
+    elif EMAIL_RE.match(raw):
+        kind = "email"
+        normalized = raw.lower()
+    elif TELEGRAM_RE.match(raw):
+        kind = "telegram"
+        normalized = "@" + raw.lstrip("@")
+    else:
+        errors.append("Введите корректный email или ник в Telegram (@username)")
+
+    if errors:
+        return jsonify({"ok": False, "errors": errors}), 400
+
+    create_early_access(normalized, kind)
+    return jsonify({"ok": True})

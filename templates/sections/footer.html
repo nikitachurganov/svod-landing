@@ -1,13 +1,13 @@
 {% from 'macros/ui_button.html' import ui_button %}
 <footer class="footer" id="contact">
     <div class="footer__graphic" aria-hidden="true">
-        <img class="footer__graphic-img" src="{{ url_for('static', filename='svod-footer-graphic.svg') }}" alt="" width="1318" height="348" decoding="async">
+        <img class="footer__graphic-img" src="{{ url_for('static', filename='images/footer_graphic.svg') }}" alt="" width="1318" height="348" decoding="async">
     </div>
     <div class="container footer__inner">
         <div class="footer__main">
             <div class="footer__mid">
                 <div class="footer__mail">
-                    <p class="footer__mail-text text-h3">support@svodservice.ru</p>
+                    <p class="footer__mail-text text-h3">{{ content.get('footer_email', 'support@svodservice.ru') }}</p>
                 </div>
                 <nav class="footer__nav" aria-label="Навигация в подвале">
                     <ul class="footer__nav-list">
@@ -18,12 +18,17 @@
                     </ul>
                 </nav>
                 <div class="footer__up">
-                    {{ ui_button('Наверх', href='#hero', variant='secondary', extra_class='footer__cta') }}
+                    <a href="#hero" class="footer__cta footer__cta--icon" aria-label="Наверх">
+                        <svg class="footer__cta-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                            <path d="M12 19V5" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+                            <path d="M5 12L12 5L19 12" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
         <div class="footer__bottom">
-            <p class="footer__copyright text-description">&copy; 2026, СВОД</p>
+            <p class="footer__copyright text-description">{{ content.get('footer_copyright', '© 2026, СВОД') | safe }}</p>
         </div>
     </div>
 </footer>

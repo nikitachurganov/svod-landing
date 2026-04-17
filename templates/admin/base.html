@@ -7,13 +7,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 </head>
 <body class="admin-body">
     <aside class="admin-sidebar">
         <a class="admin-sidebar__logo" href="{{ url_for('admin.contacts') }}">
-            <img src="{{ url_for('static', filename='logo.svg') }}" width="67" height="17" alt="Svod">
+            <img src="{{ url_for('static', filename='icons/logo.svg') }}" width="67" height="17" alt="Svod">
             <span class="admin-sidebar__badge">admin</span>
         </a>
         <nav class="admin-sidebar__nav">
@@ -43,7 +43,8 @@
 
     <main class="admin-main">
         <header class="admin-topbar">
-            <h1 class="admin-topbar__title text-h3">{% block page_title %}Админ-панель{% endblock %}</h1>
+            <h1 class="admin-topbar__title">{% block page_title %}Админ-панель{% endblock %}</h1>
+            <div class="admin-topbar__actions">{% block page_actions %}{% endblock %}</div>
         </header>
         <div class="admin-content">
             {% block content %}{% endblock %}

@@ -1,10 +1,37 @@
+{% from 'macros/ui_button.html' import ui_button %}
 <section class="value-headline" aria-labelledby="value-headline-title">
     <div class="container value-headline__inner">
         <h2 id="value-headline-title" class="value-headline__title text-h1">
-            {{ content.get('less_work_title', 'Меньше ручной работы —<br>больше результата') | safe }}
+            {{ content.get('less_work_title', 'Меньше ручной работы<br>— больше результата') | safe }}
         </h2>
-        <p class="value-headline__description text-body-m">
-            {{ content.get('less_work_description', 'Система обрабатывает заявки<br>и распределяет задачи без участия человека') | safe }}
-        </p>
+        <div class="value-headline__columns">
+            <div class="value-headline__col">
+                <h3 class="value-headline__col-title text-h3">
+                    {{ content.get('less_work_left_title', 'Вы получаете') }}
+                </h3>
+                <p class="value-headline__col-desc text-body-m">
+                    {{ content.get('less_work_left_text', 'до 15 часов вашего времени в неделю на более важные задачи') }}
+                </p>
+            </div>
+            <div class="value-headline__col">
+                <h3 class="value-headline__col-title text-h3">
+                    {{ content.get('less_work_right_title', 'СВОД берёт на себя рутину') }}
+                </h3>
+                <p class="value-headline__col-desc text-body-m">
+                    {{ content.get(
+                        'less_work_right_text',
+                        'Собирает запросы, составляет ТЗ, ищет нужного исполнителя и отправляет сообщение после вашего согласования'
+                    ) }}
+                </p>
+                <div class="value-headline__col-actions">
+                    {{ ui_button(
+                        content.get('hero_btn_primary', 'Начать бесплатно'),
+                        variant='primary',
+                        button_type='button',
+                        extra_class='js-dev-notice-trigger'
+                    ) }}
+                </div>
+            </div>
+        </div>
     </div>
 </section>

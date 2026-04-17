@@ -25,7 +25,7 @@
                 <th>Комментарий</th>
                 <th>Оценка</th>
                 <th>Дата</th>
-                <th></th>
+                <th class="admin-table__actions" aria-label="Действия"></th>
             </tr>
         </thead>
         <tbody>
@@ -40,10 +40,10 @@
                 <td class="admin-table__comment">{% if c.comment %}{{ c.comment }}{% else %}—{% endif %}</td>
                 <td>{% if c.rating is not none %}{{ c.rating }}{% else %}—{% endif %}</td>
                 <td class="admin-table__date">{{ c.created_at }}</td>
-                <td>
+                <td class="admin-table__actions">
                     <form method="POST" action="{{ url_for('admin.contact_delete', contact_id=c.id) }}"
                           onsubmit="return confirm('Удалить заявку #{{ c.id }}?')">
-                        <button type="submit" class="admin-btn-delete" title="Удалить">✕</button>
+                        <button type="submit" class="admin-icon-btn" title="Удалить">✕</button>
                     </form>
                 </td>
             </tr>

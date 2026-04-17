@@ -3,50 +3,80 @@
 {% block title %}Тарифы{% endblock %}
 {% block page_title %}Тарифы{% endblock %}
 
+{% block page_actions %}
+    <button type="submit" form="admin-pricing-form" class="ui-btn ui-btn--primary ui-btn--sm">Сохранить</button>
+{% endblock %}
+
 {% block content %}
-<form method="POST" class="admin-pricing-form">
-    <div class="ve-section" style="margin-bottom: 28px;">
-        <div class="ve-section__badge">Заголовок секции</div>
-        <label class="ve-label" for="pricing_title">Заголовок</label>
-        <textarea class="ve-input ve-input--body" id="pricing_title" name="pricing_title" rows="2">{{ c.pricing_title }}</textarea>
-        <label class="ve-label" for="pricing_description" style="margin-top: 16px;">Описание</label>
-        <textarea class="ve-input ve-input--body" id="pricing_description" name="pricing_description" rows="2">{{ c.pricing_description }}</textarea>
-    </div>
+<form id="admin-pricing-form" method="POST" class="ve">
+    <section class="ve-section">
+        <header class="ve-section__head">
+            <div>
+                <h2 class="ve-section__title">Заголовок секции</h2>
+                <span class="ve-section__caption">Показывается над сеткой тарифов</span>
+            </div>
+            <span class="ve-section__anchor">#pricing</span>
+        </header>
+
+        <div class="ve-block">
+            <label class="ve-label" for="pricing_title">Заголовок</label>
+            <p class="ve-hint">Можно использовать &lt;br&gt; для переноса строки.</p>
+            <textarea class="ve-input" id="pricing_title" name="pricing_title" rows="2">{{ c.pricing_title }}</textarea>
+        </div>
+
+        <div class="ve-block">
+            <label class="ve-label" for="pricing_description">Описание</label>
+            <textarea class="ve-input" id="pricing_description" name="pricing_description" rows="2">{{ c.pricing_description }}</textarea>
+        </div>
+    </section>
 
     {% for p in plans %}
-    <div class="ve-section admin-pricing-plan">
-        <div class="ve-section__badge">Тариф #{{ p.id }}</div>
+    <section class="ve-section admin-pricing-plan">
+        <header class="ve-section__head">
+            <div>
+                <h2 class="ve-section__title">Тариф «{{ p.name or 'Без названия' }}»</h2>
+                <span class="ve-section__caption">ID {{ p.id }} · сортировка {{ p.sort_order }}</span>
+            </div>
+            <span class="ve-section__anchor">Plan</span>
+        </header>
+
         <input type="hidden" name="plan_{{ p.id }}_sort_order" value="{{ p.sort_order }}">
 
-        <label class="ve-label" for="plan_{{ p.id }}_name">Название</label>
-        <input class="ve-input ve-input--h4" id="plan_{{ p.id }}_name" name="plan_{{ p.id }}_name" value="{{ p.name }}" required>
+        <div class="ve-block">
+            <label class="ve-label" for="plan_{{ p.id }}_name">Название</label>
+            <input class="ve-input" id="plan_{{ p.id }}_name" name="plan_{{ p.id }}_name" value="{{ p.name }}" required>
+        </div>
 
-        <div class="admin-pricing-plan__row">
-            <div>
-                <label class="ve-label-sm" for="plan_{{ p.id }}_price_month">Цена (месяц)</label>
-                <input class="ve-input ve-input--sm" id="plan_{{ p.id }}_price_month" name="plan_{{ p.id }}_price_month" value="{{ p.price_month }}" placeholder="12 000 руб./мес">
-            </div>
-            <div>
-                <label class="ve-label-sm" for="plan_{{ p.id }}_price_year">Цена (год)</label>
-                <input class="ve-input ve-input--sm" id="plan_{{ p.id }}_price_year" name="plan_{{ p.id }}_price_year" value="{{ p.price_year }}" placeholder="115 200 руб./год">
+        <div class="ve-block">
+            <div class="ve-grid">
+                <div>
+                    <label class="ve-label" for="plan_{{ p.id }}_price_month">Цена за месяц</label>
+                    <input class="ve-input" id="plan_{{ p.id }}_price_month" name="plan_{{ p.id }}_price_month" value="{{ p.price_month }}" placeholder="12 000 руб./мес">
+                </div>
+                <div>
+                    <label class="ve-label" for="plan_{{ p.id }}_price_year">Цена за год</label>
+                    <input class="ve-input" id="plan_{{ p.id }}_price_year" name="plan_{{ p.id }}_price_year" value="{{ p.price_year }}" placeholder="115 200 руб./год">
+                </div>
             </div>
         </div>
 
-        <label class="ve-label" for="plan_{{ p.id }}_description">Краткое описание (под названием)</label>
-        <input class="ve-input ve-input--body" id="plan_{{ p.id }}_description" name="plan_{{ p.id }}_description" value="{{ p.description }}" placeholder="Необязательно">
+        <div class="ve-block">
+            <label class="ve-label" for="plan_{{ p.id }}_description">Краткое описание (под названием)</label>
+            <input class="ve-input" id="plan_{{ p.id }}_description" name="plan_{{ p.id }}_description" value="{{ p.description }}" placeholder="Необязательно">
+        </div>
 
-        <label class="ve-label" for="plan_{{ p.id }}_features">Преимущества (каждая строка — пункт)</label>
-        <textarea class="ve-input ve-input--body" id="plan_{{ p.id }}_features" name="plan_{{ p.id }}_features" rows="5">{{ p.features }}</textarea>
+        <div class="ve-block">
+            <label class="ve-label" for="plan_{{ p.id }}_features">Преимущества</label>
+            <p class="ve-hint">Каждая строка — отдельный пункт списка.</p>
+            <textarea class="ve-input" id="plan_{{ p.id }}_features" name="plan_{{ p.id }}_features" rows="5">{{ p.features }}</textarea>
+        </div>
 
-        <label class="admin-pricing-plan__check text-body-s">
+        <label class="admin-pricing-plan__check">
             <input type="checkbox" name="plan_{{ p.id }}_is_active" value="1" {% if p.is_active %}checked{% endif %}>
             Показывать на сайте
         </label>
-    </div>
+    </section>
     {% endfor %}
 
-    <div class="ve-submit">
-        <button type="submit" class="ui-btn ui-btn--primary">Сохранить</button>
-    </div>
 </form>
 {% endblock %}

@@ -7,9 +7,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    <div
+        id="scrollProgress"
+        class="scroll-progress"
+        role="progressbar"
+        aria-label="Прогресс прокрутки страницы"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+    >
+        <div id="scrollProgressFill" class="scroll-progress__fill"></div>
+    </div>
+
     <div id="notification-container" aria-live="polite"></div>
 
     <div class="site-top site-top--visible">
@@ -23,6 +35,7 @@
 
     {% include 'sections/footer.html' %}
     {% include 'sections/contact_panel.html' %}
+    {% include 'sections/early_access_modal.html' %}
 
     <script>
     (function() {
@@ -32,23 +45,54 @@
             return d.innerHTML;
         }
 
-        function showNotification(message) {
+        function showNotification(message, options) {
+            options = options || {};
+            var duration = typeof options.duration === 'number' ? options.duration : 3600;
+            var variant = options.variant === 'notice' ? 'notice' : 'success';
             var container = document.getElementById('notification-container');
             if (!container) return;
             var el = document.createElement('div');
-            el.className = 'notification notification--success';
-            el.textContent = message;
+            el.className = 'notification notification--' + variant;
             el.setAttribute('role', 'status');
-            container.appendChild(el);
-            requestAnimationFrame(function() {
-                el.classList.add('notification--visible');
-            });
-            setTimeout(function() {
+
+            var inner = document.createElement('div');
+            inner.className = 'notification__inner';
+
+            var msg = document.createElement('p');
+            msg.className = 'notification__message';
+            msg.textContent = message;
+            inner.appendChild(msg);
+
+            var hideTimer = null;
+            function removeNotification() {
+                if (hideTimer) {
+                    clearTimeout(hideTimer);
+                    hideTimer = null;
+                }
                 el.classList.remove('notification--visible');
                 setTimeout(function() {
                     if (el.parentNode) el.parentNode.removeChild(el);
                 }, 320);
-            }, 3600);
+            }
+
+            if (options.actionLabel && typeof options.onAction === 'function') {
+                var actionBtn = document.createElement('button');
+                actionBtn.type = 'button';
+                actionBtn.className = 'notification__action ui-btn ui-btn--primary ui-btn--xs';
+                actionBtn.textContent = options.actionLabel;
+                actionBtn.addEventListener('click', function() {
+                    removeNotification();
+                    options.onAction();
+                });
+                inner.appendChild(actionBtn);
+            }
+
+            el.appendChild(inner);
+            container.appendChild(el);
+            requestAnimationFrame(function() {
+                el.classList.add('notification--visible');
+            });
+            hideTimer = setTimeout(removeNotification, duration);
         }
 
         var panel = document.getElementById('contactPanel');
@@ -94,6 +138,118 @@
             el.addEventListener('click', function(e) {
                 e.preventDefault();
                 openContactPanel();
+            });
+        });
+
+        var eaModal = document.getElementById('earlyAccessModal');
+        var eaBackdrop = document.getElementById('earlyAccessBackdrop');
+        var eaForm = document.getElementById('earlyAccessForm');
+        var eaInput = document.getElementById('earlyAccessContact');
+        var eaSubmit = document.getElementById('earlyAccessSubmit');
+        var eaErrors = document.getElementById('earlyAccessErrors');
+        function eaClearErrors() {
+            if (!eaErrors) return;
+            eaErrors.hidden = true;
+            eaErrors.textContent = '';
+        }
+
+        function openEarlyAccessModal() {
+            if (!eaModal) return;
+            eaClearErrors();
+            if (eaForm) eaForm.reset();
+            if (typeof window.lockSiteTopVisible === 'function') {
+                window.lockSiteTopVisible();
+            }
+            eaModal.setAttribute('aria-hidden', 'false');
+            if (eaBackdrop) eaBackdrop.setAttribute('aria-hidden', 'false');
+            requestAnimationFrame(function() {
+                eaModal.classList.add('ea-modal--open');
+                if (eaBackdrop) eaBackdrop.classList.add('ea-modal__backdrop--open');
+            });
+            document.body.style.overflow = 'hidden';
+            setTimeout(function() {
+                if (eaInput) {
+                    try { eaInput.focus({ preventScroll: true }); } catch (_) { eaInput.focus(); }
+                }
+            }, 120);
+        }
+
+        function closeEarlyAccessModal() {
+            if (!eaModal) return;
+            eaModal.classList.remove('ea-modal--open');
+            if (eaBackdrop) eaBackdrop.classList.remove('ea-modal__backdrop--open');
+            eaModal.setAttribute('aria-hidden', 'true');
+            if (eaBackdrop) eaBackdrop.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            if (typeof window.unlockSiteTop === 'function') {
+                window.unlockSiteTop();
+            }
+            eaClearErrors();
+        }
+
+        if (eaModal) {
+            document.querySelectorAll('[data-early-access-close]').forEach(function(el) {
+                el.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    closeEarlyAccessModal();
+                });
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && eaModal.classList.contains('ea-modal--open')) {
+                    closeEarlyAccessModal();
+                }
+            });
+        }
+
+        if (eaForm && eaInput && eaSubmit) {
+            eaForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                eaClearErrors();
+                var value = (eaInput.value || '').trim();
+                if (!value) {
+                    eaErrors.hidden = false;
+                    eaErrors.textContent = 'Укажите email или ник в Telegram (@username)';
+                    return;
+                }
+                eaSubmit.disabled = true;
+                var fd = new FormData(eaForm);
+                fetch(eaForm.action, {
+                    method: 'POST',
+                    body: fd,
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    credentials: 'same-origin'
+                })
+                .then(function(res) {
+                    return res.json().then(function(data) { return { res: res, data: data }; })
+                        .catch(function() { return { res: res, data: null }; });
+                })
+                .then(function(p) {
+                    if (p.res.ok && p.data && p.data.ok) {
+                        closeEarlyAccessModal();
+                        if (eaForm) eaForm.reset();
+                        showNotification('Заявка отправлена', { variant: 'success' });
+                    } else if (p.data && p.data.errors && p.data.errors.length) {
+                        eaErrors.hidden = false;
+                        eaErrors.textContent = p.data.errors.join(' ');
+                    } else {
+                        eaErrors.hidden = false;
+                        eaErrors.textContent = 'Не удалось отправить заявку. Попробуйте ещё раз.';
+                    }
+                })
+                .catch(function() {
+                    eaErrors.hidden = false;
+                    eaErrors.textContent = 'Ошибка сети. Проверьте подключение и попробуйте снова.';
+                })
+                .finally(function() {
+                    eaSubmit.disabled = false;
+                });
+            });
+        }
+
+        document.querySelectorAll('.js-dev-notice-trigger').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                openEarlyAccessModal();
             });
         });
 
@@ -169,8 +325,9 @@
         {% endwith %}
     })();
     </script>
-    <script src="{{ url_for('static', filename='contact-phone.js') }}"></script>
-    <script src="{{ url_for('static', filename='site-nav.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/contact_phone.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/site_nav.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scroll_progress.js') }}"></script>
 
     {% block scripts %}{% endblock %}
 </body>

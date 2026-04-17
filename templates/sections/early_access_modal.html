@@ -1,0 +1,72 @@
+<div class="ea-modal__backdrop" id="earlyAccessBackdrop" aria-hidden="true" data-early-access-close></div>
+<div class="ea-modal" id="earlyAccessModal" role="dialog" aria-modal="true" aria-labelledby="early-access-title" aria-hidden="true">
+    <div class="container ea-modal__inner">
+        <div class="ea-modal__topbar">
+            <p class="ea-modal__timing text-body-s">
+                {{ content.get('early_access_timing', 'Дата релиза: 1 июня 2026') }}
+            </p>
+            <button type="button" class="ea-modal__close modal__close" data-early-access-close aria-label="Закрыть">&times;</button>
+        </div>
+
+        <div class="ea-modal__view">
+            <header class="ea-modal__header">
+                <h2 class="ea-modal__title text-h3" id="early-access-title">
+                    {{ content.get('early_access_title', 'Получите ранний доступ к СВОД') }}
+                </h2>
+                <p class="ea-modal__subtitle text-body-m">
+                    {{ content.get('early_access_subtitle', 'Протестируйте сервис раньше других и помогите сформировать продукт под ваши задачи') }}
+                </p>
+            </header>
+
+            <ul class="ea-modal__bullets" role="list">
+                <li class="ea-modal__bullet">
+                    <span class="ea-modal__bullet-icon" aria-hidden="true">
+                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 10.5L8 14.5L16 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+                        </svg>
+                    </span>
+                    <span class="ea-modal__bullet-text text-body-s">{{ content.get('early_access_bullet_1', 'Подключим вас к системе в числе первых') }}</span>
+                </li>
+                <li class="ea-modal__bullet">
+                    <span class="ea-modal__bullet-icon" aria-hidden="true">
+                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 10.5L8 14.5L16 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+                        </svg>
+                    </span>
+                    <span class="ea-modal__bullet-text text-body-s">{{ content.get('early_access_bullet_2', 'Вы сможете влиять на развитие продукта') }}</span>
+                </li>
+                <li class="ea-modal__bullet">
+                    <span class="ea-modal__bullet-icon" aria-hidden="true">
+                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 10.5L8 14.5L16 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+                        </svg>
+                    </span>
+                    <span class="ea-modal__bullet-text text-body-s">{{ content.get('early_access_bullet_3', 'Специальные условия на старте') }}</span>
+                </li>
+            </ul>
+
+            <form class="ea-modal__form" id="earlyAccessForm" method="POST" action="{{ url_for('main.early_access') }}" novalidate>
+                <div class="ea-modal__field">
+                    <label class="ea-modal__sr-only" for="earlyAccessContact">Email или Telegram</label>
+                    <input
+                        class="ea-modal__input"
+                        id="earlyAccessContact"
+                        name="contact"
+                        type="text"
+                        autocomplete="email"
+                        spellcheck="false"
+                        placeholder="{{ content.get('early_access_placeholder', 'Введите ваш эл. адрес') }}"
+                        required
+                    >
+                    <button type="submit" class="ui-btn ui-btn--primary ui-btn--md ea-modal__submit" id="earlyAccessSubmit">
+                        {{ content.get('early_access_submit', 'Отправить заявку') }}
+                    </button>
+                </div>
+                <p class="ea-modal__errors" id="earlyAccessErrors" role="alert" hidden></p>
+                <p class="ea-modal__note text-body-s">
+                    {{ content.get('early_access_note', 'Мы напишем вам, когда выпустим релиз в июне') }}
+                </p>
+            </form>
+        </div>
+    </div>
+</div>

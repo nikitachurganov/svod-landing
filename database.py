@@ -8,34 +8,49 @@ DB_PATH = os.path.join(DB_DIR, "data", "db.sqlite3")
 CONTENT_DEFAULTS = {
     # Hero
     "hero_title": (
-        'Превратите поток <span class="hero__title-accent">заявок</span><br>'
-        "в управляемую систему"
+        '<span class="hero__title-line">Все заявки из чатов, почты и форм</span>'
+        '<span class="hero__title-line">— в одном <span class="hero__title-accent">управляемом</span> потоке</span>'
     ),
     "hero_description": (
-        "Сервис собирает все запросы в одном месте, структурирует"
-        "<br>их и автоматически распределяет задачи по команде"
+        '<span class="hero__lead-line">Система собирает заявки из всех каналов, превращает их</span>'
+        '<span class="hero__lead-line">в задачи и назначает исполнителей — без ручной обработки</span>'
     ),
     "hero_btn_primary": "Начать бесплатно",
     "hero_btn_secondary": "Связаться с нами",
 
-    # How it works
-    "how_title": "Как это работает",
-    "how_description": (
-        "Сервис собирает все запросы в одном месте, структурирует "
-        "их и автоматически распределяет задачи по команде"
+    # Как это работает (how_alt)
+    "how_alt_title": "Как это работает",
+    "how_alt_description": (
+        "Сервис собирает все запросы в одном месте, структурирует их "
+        "и автоматически распределяет задачи по команде"
     ),
-    "how_step_1_title": "Соберите все заявки в одном месте",
-    "how_step_1_with": "Получайте запросы через формы вместо хаоса в чатах, почте и таблицах",
-    "how_step_1_without": "Заявки теряются в чатах, почте и таблицах — нет единого места для контроля",
-    "how_step_2_title": "Структурируйте входящий поток",
-    "how_step_2_with": "Теги, статусы и единый формат заявок — сразу видно, что в работе и что просрочено",
-    "how_step_2_without": "Разрозненные треды и файлы: сложно понять приоритет и не потерять запрос",
-    "how_step_3_title": "Автоматически распределяйте задачи",
-    "how_step_3_with": "Правила и очереди назначают исполнителя без ручных пересылок и уточнений",
-    "how_step_3_without": "Кто возьмёт задачу — решается в переписке, нагрузка на команду распределяется неравномерно",
-    "how_step_4_title": "Контролируйте выполнение",
-    "how_step_4_with": "Сроки, напоминания и история по каждой заявке — статус прозрачен для всех",
-    "how_step_4_without": "Сложно отследить, на каком этапе запрос и кто за него отвечает",
+    "how_alt_card_1_title": "Соберите все заявки в одном месте",
+    "how_alt_card_1_old": "Хаотичный поток заявок из разных каналов",
+    "how_alt_card_1_desc": (
+        "Получайте все запросы по одной ссылке, а оставшиеся заявки из почты и мессенджеров "
+        "обработаются автоматически"
+    ),
+    "how_alt_card_2_title": "Структурируйте входящий поток заявок",
+    "how_alt_card_2_old": (
+        "Не структурированные и не полные запросы, подробности по которым придётся неоднократно уточнять"
+    ),
+    "how_alt_card_2_desc": (
+        "Адаптивная форма подстраивается под запрос в процессе заполнения, систематизируя и дополняя "
+        "информацию. После заполнения получите ИИ-саммари по каждой заявке"
+    ),
+    "how_alt_card_3_title": "Распределяйте задачи автоматически",
+    "how_alt_card_3_old": "Нужно тратить время на составление ТЗ, а после искать подходящих исполнителей",
+    "how_alt_card_3_desc": (
+        "Сервис сам подготовит ТЗ на основе запроса и после одобрения отправит его подходящему исполнителю "
+        "(можно даже в почту или мессенджер)"
+    ),
+    "how_alt_card_4_title": "Контролируйте выполнение",
+    "how_alt_card_4_old": (
+        "Сложно понять, на каком этапе находится заявка, а важные запросы теряются по ходу выполнения"
+    ),
+    "how_alt_card_4_desc": (
+        "Информация обо всех запросах в одном реестре с актуальными статусами и напоминаниями"
+    ),
 
     # Usage scenarios
     "usecase_title": "Сценарий использования",
@@ -61,8 +76,14 @@ CONTENT_DEFAULTS = {
     ),
 
     # Value headline
-    "less_work_title": "Меньше ручной работы —<br>больше результата",
-    "less_work_description": "Система обрабатывает заявки<br>и распределяет задачи без участия человека",
+    "less_work_title": "Меньше ручной работы<br>— больше результата",
+    "less_work_left_title": "Вы получаете",
+    "less_work_left_text": "до 15 часов вашего времени в неделю на более важные задачи",
+    "less_work_right_title": "СВОД берёт на себя рутину",
+    "less_work_right_text": (
+        "Собирает запросы, составляет ТЗ, ищет нужного исполнителя и отправляет сообщение "
+        "после вашего согласования"
+    ),
 
     # Team changes
     "team_title": "Как меняется работа команды",
@@ -76,11 +97,33 @@ CONTENT_DEFAULTS = {
     "team_metric_4": "1 экран",
     "team_label_4": "для контроля потока: кто взял задачу и до какого срока",
 
+    # Интеграции
+    "integrations_title": "Интеграции с вашими рабочими инструментами",
+    "integrations_description": (
+        "Собирайте заявки из разных каналов в одном месте — без ручного копирования и потерь"
+    ),
+    "integration_1_title": "Яндекс Почта",
+    "integration_1_description": "Автоматически превращает входящие письма в заявки",
+    "integration_2_title": "Телеграм",
+    "integration_2_description": "Заявки из чатов и ботов сразу попадают в систему",
+    "integration_3_title": "YouGile",
+    "integration_3_description": (
+        "Передавайте заявки в задачи и доски YouGile без ручного дублирования"
+    ),
+    "integration_4_title": "Яндекс Формы",
+    "integration_4_description": (
+        "Собирайте заявки через формы и обрабатывайте их централизованно"
+    ),
+
+    # Футер
+    "footer_email": "support@svodservice.ru",
+    "footer_copyright": "© 2026, СВОД",
+
     # CTA
     "cta_title": "Возьмите заявки под контроль",
     "cta_description": (
         "Единая лента заявок, автоматическое распределение задач "
-        "и прозрачные сроки — без хаоса в чатах и почте."
+        "и прозрачные сроки —<br>без хаоса в чатах и почте."
     ),
     "cta_btn_primary": "Начать бесплатно",
     "cta_btn_secondary": "Связаться с нами",
@@ -94,6 +137,19 @@ CONTENT_DEFAULTS = {
         "Экономьте время команды и ускоряйте<br>"
         "выполнение задач с помощью автоматизации"
     ),
+
+    # Early access modal (primary CTA — pre-launch waitlist)
+    "early_access_title": "Получите ранний доступ к СВОД",
+    "early_access_timing": "Дата релиза: 1 июня 2026",
+    "early_access_subtitle": (
+        "Протестируйте сервис раньше других и помогите сформировать продукт под ваши задачи"
+    ),
+    "early_access_bullet_1": "Подключим вас к системе в числе первых",
+    "early_access_bullet_2": "Вы сможете влиять на развитие продукта",
+    "early_access_bullet_3": "Специальные условия на старте",
+    "early_access_placeholder": "Введите ваш эл. адрес",
+    "early_access_submit": "Отправить заявку",
+    "early_access_note": "Мы напишем вам, когда выпустим релиз в июне",
 }
 
 
@@ -126,6 +182,13 @@ def init_db():
             value TEXT    NOT NULL
         );
 
+        CREATE TABLE IF NOT EXISTS early_access (
+            id         INTEGER PRIMARY KEY AUTOINCREMENT,
+            contact    TEXT    NOT NULL,
+            kind       TEXT    NOT NULL,
+            created_at TEXT    NOT NULL
+        );
+
         CREATE TABLE IF NOT EXISTS pricing (
             id          INTEGER PRIMARY KEY AUTOINCREMENT,
             name        TEXT    NOT NULL,
@@ -143,6 +206,9 @@ def init_db():
             "INSERT OR IGNORE INTO content (key, value) VALUES (?, ?)",
             (key, value),
         )
+    _upgrade_cta_description_linebreak(conn)
+    _upgrade_less_work_title_linebreak(conn)
+    _cleanup_obsolete_content_keys(conn)
     _seed_pricing_if_empty(conn)
     _ensure_contact_rating_column(conn)
     _ensure_contact_name_columns(conn)
@@ -188,6 +254,64 @@ def _ensure_contact_comment_column(conn):
     cols = {row[1] for row in conn.execute("PRAGMA table_info(contacts)").fetchall()}
     if "comment" not in cols:
         conn.execute("ALTER TABLE contacts ADD COLUMN comment TEXT")
+
+
+def _upgrade_cta_description_linebreak(conn):
+    old = (
+        "Единая лента заявок, автоматическое распределение задач "
+        "и прозрачные сроки — без хаоса в чатах и почте."
+    )
+    row = conn.execute(
+        "SELECT value FROM content WHERE key = ?", ("cta_description",)
+    ).fetchone()
+    if row and row[0] == old:
+        conn.execute(
+            "UPDATE content SET value = ? WHERE key = ?",
+            (CONTENT_DEFAULTS["cta_description"], "cta_description"),
+        )
+
+
+def _upgrade_less_work_title_linebreak(conn):
+    old_variants = (
+        "Меньше ручной работы —<br>больше результата",
+        "Меньше ручной работы — больше результата",
+    )
+    row = conn.execute(
+        "SELECT value FROM content WHERE key = ?", ("less_work_title",)
+    ).fetchone()
+    if row and row[0] in old_variants:
+        conn.execute(
+            "UPDATE content SET value = ? WHERE key = ?",
+            (CONTENT_DEFAULTS["less_work_title"], "less_work_title"),
+        )
+
+
+OBSOLETE_CONTENT_KEYS = (
+    # Старый блок «Как это работает» (how_it_works.html) — больше не используется,
+    # заменён на how_alt.html с полями how_alt_*.
+    "how_title",
+    "how_description",
+    "how_step_1_title",
+    "how_step_1_with",
+    "how_step_1_without",
+    "how_step_2_title",
+    "how_step_2_with",
+    "how_step_2_without",
+    "how_step_3_title",
+    "how_step_3_with",
+    "how_step_3_without",
+    "how_step_4_title",
+    "how_step_4_with",
+    "how_step_4_without",
+)
+
+
+def _cleanup_obsolete_content_keys(conn):
+    placeholders = ",".join("?" * len(OBSOLETE_CONTENT_KEYS))
+    conn.execute(
+        f"DELETE FROM content WHERE key IN ({placeholders})",
+        OBSOLETE_CONTENT_KEYS,
+    )
 
 
 def _seed_pricing_if_empty(conn):
@@ -279,6 +403,34 @@ def get_stats():
     total = conn.execute("SELECT COUNT(*) FROM contacts").fetchone()[0]
     conn.close()
     return {"total": total}
+
+
+# --- Early access waitlist ---
+
+def create_early_access(contact: str, kind: str):
+    conn = _get_conn()
+    conn.execute(
+        "INSERT INTO early_access (contact, kind, created_at) VALUES (?, ?, ?)",
+        (contact, kind, datetime.now().isoformat(sep=" ", timespec="seconds")),
+    )
+    conn.commit()
+    conn.close()
+
+
+def get_all_early_access():
+    conn = _get_conn()
+    rows = conn.execute(
+        "SELECT * FROM early_access ORDER BY created_at DESC"
+    ).fetchall()
+    conn.close()
+    return rows
+
+
+def get_early_access_count():
+    conn = _get_conn()
+    total = conn.execute("SELECT COUNT(*) FROM early_access").fetchone()[0]
+    conn.close()
+    return total
 
 
 # --- Content ---

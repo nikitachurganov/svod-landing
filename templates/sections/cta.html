@@ -1,7 +1,7 @@
 {% from 'macros/ui_button.html' import ui_button %}
 <section class="cta" aria-labelledby="cta-title">
     <div class="cta__background" aria-hidden="true">
-        <img class="cta__background-img" src="{{ url_for('static', filename='form-bg.svg') }}" alt="" width="1440" height="620" decoding="async">
+        <img class="cta__background-img" src="{{ url_for('static', filename='images/cta_background.svg') }}" alt="" width="1440" height="620" decoding="async">
     </div>
     <div class="container cta__inner">
         <div class="cta__card">
@@ -15,11 +15,11 @@
             <div class="cta__content">
                 <h2 id="cta-title" class="cta__title text-h3">{{ content.get('cta_title', 'Возьмите заявки под контроль') }}</h2>
                 <p class="cta__subtitle text-body-m">
-                    {{ content.get('cta_description', 'Единая лента заявок, автоматическое распределение задач и прозрачные сроки — без хаоса в чатах и почте.') }}
+                    {{ content.get('cta_description', 'Единая лента заявок, автоматическое распределение задач и прозрачные сроки —<br>без хаоса в чатах и почте.') | safe }}
                 </p>
                 <div class="cta__actions">
-                    {{ ui_button(content.get('cta_btn_primary', 'Начать бесплатно'), variant='primary', button_type='button') }}
-                    {{ ui_button(content.get('cta_btn_secondary', 'Связаться с нами'), href='#contact', variant='secondary') }}
+                    {{ ui_button(content.get('cta_btn_primary', 'Начать бесплатно'), variant='primary', button_type='button', extra_class='js-dev-notice-trigger', size='md') }}
+                    {{ ui_button(content.get('cta_btn_secondary', 'Связаться с нами'), href='#contact', variant='secondary', size='md') }}
                 </div>
             </div>
         </div>
