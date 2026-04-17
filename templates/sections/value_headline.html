@@ -1,6 +1,7 @@
 {% from 'macros/ui_button.html' import ui_button %}
+<div class="container">
 <section class="value-headline" aria-labelledby="value-headline-title">
-    <div class="container value-headline__inner">
+    <div class="value-headline__inner">
         <h2 id="value-headline-title" class="value-headline__title text-h1">
             {{ content.get('less_work_title', 'Меньше ручной работы<br>— больше результата') | safe }}
         </h2>
@@ -35,3 +36,4 @@
         </div>
     </div>
 </section>
+</div>

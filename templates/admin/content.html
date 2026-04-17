@@ -10,14 +10,14 @@
 {% block content %}
 <form id="admin-content-form" method="POST" class="ve">
 
-    {# ======== БАННЕР ОПРОСА ======== #}
+    {# ======== ССЫЛКА НА ОПРОС ======== #}
     <section class="ve-section" id="sec-banner">
         <header class="ve-section__head">
             <div>
-                <h2 class="ve-section__title">Баннер опроса</h2>
-                <span class="ve-section__caption">Оранжевая полоса под шапкой сайта</span>
+                <h2 class="ve-section__title">Ссылка на опрос</h2>
+                <span class="ve-section__caption">Используется в блоке «Помогите сделать продукт лучше» и других кнопках «Пройти опрос»</span>
             </div>
-            <span class="ve-section__anchor">Top banner</span>
+            <span class="ve-section__anchor">survey_url</span>
         </header>
 
         <div class="ve-block">
@@ -169,6 +169,32 @@
                 <label class="ve-label ve-label--spaced" for="less_work_right_text">Текст</label>
                 <textarea class="ve-input" id="less_work_right_text" name="less_work_right_text" rows="3">{{ c.less_work_right_text }}</textarea>
             </div>
+        </div>
+    </section>
+
+    {# ======== БЛОК ОПРОСА (МЕЖДУ VALUE И КОМАНДОЙ) ======== #}
+    <section class="ve-section" id="sec-survey-cta">
+        <header class="ve-section__head">
+            <div>
+                <h2 class="ve-section__title">Блок опроса на лендинге</h2>
+                <span class="ve-section__caption">Между «Меньше ручной работы» и «Команда» · ссылка — поле «Ссылка опроса» в баннере</span>
+            </div>
+            <span class="ve-section__anchor">#survey</span>
+        </header>
+
+        <div class="ve-block">
+            <label class="ve-label" for="survey_cta_title">Заголовок</label>
+            <input class="ve-input" id="survey_cta_title" name="survey_cta_title" value="{{ c.survey_cta_title }}">
+        </div>
+
+        <div class="ve-block">
+            <label class="ve-label" for="survey_cta_description">Описание</label>
+            <input class="ve-input" id="survey_cta_description" name="survey_cta_description" value="{{ c.survey_cta_description }}">
+        </div>
+
+        <div class="ve-block">
+            <label class="ve-label" for="survey_cta_btn">Текст кнопки</label>
+            <input class="ve-input" id="survey_cta_btn" name="survey_cta_btn" value="{{ c.survey_cta_btn }}">
         </div>
     </section>
 

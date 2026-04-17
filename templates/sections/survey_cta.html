@@ -1,0 +1,16 @@
+<div class="container">
+<section class="survey-cta" id="survey" aria-labelledby="survey-cta-title">
+    <div class="survey-cta__box">
+        <h2 id="survey-cta-title" class="survey-cta__title text-h2">
+            {{ content.get('survey_cta_title', 'Помогите сделать продукт лучше') }}
+        </h2>
+        <p class="survey-cta__desc text-body-m">
+            {{ content.get('survey_cta_description', 'Пройдите короткий опрос (5-7 минут)') }}
+        </p>
+        {% set _survey_href = content.get('survey_url') or 'https://example.com/survey' %}
+        <a class="ui-btn ui-btn--md survey-cta__btn" href="{{ _survey_href|e }}" target="_blank" rel="noopener noreferrer">
+            {{ content.get('survey_cta_btn', 'Пройти опрос') }}
+        </a>
+    </div>
+</section>
+</div>
