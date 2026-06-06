@@ -1,17 +1,22 @@
 /* ——— Design tokens ——— */
 
 :root {
-    /* ——— Brand primary (orange) ——— */
-    --color-primary-50: #ffb375;
-    --color-primary-100: #ffa366;
-    --color-primary-200: #ff9358;
-    --color-primary-300: #ff844a;
-    --color-primary-400: #f8743c;
-    --color-primary-500: #eb642f;
-    --color-primary-600: #d75a21;
-    --color-primary-700: #c35113;
-    --color-primary-800: #b04702;
-    --color-primary-900: #9d3e00;
+    /* ——— Brand tokens ——— */
+    --brand-main: #F83600;
+    --brand-light: #F26E16;
+    --brand-gradient: linear-gradient(135deg, var(--brand-light) 0%, var(--brand-main) 100%);
+
+    /* ——— Brand primary scale ——— */
+    --color-primary-50: color-mix(in srgb, var(--brand-light) 35%, white);
+    --color-primary-100: color-mix(in srgb, var(--brand-light) 50%, white);
+    --color-primary-200: color-mix(in srgb, var(--brand-light) 65%, white);
+    --color-primary-300: color-mix(in srgb, var(--brand-light) 80%, white);
+    --color-primary-400: color-mix(in srgb, var(--brand-light) 70%, var(--brand-main) 30%);
+    --color-primary-500: var(--brand-light);
+    --color-primary-600: color-mix(in srgb, var(--brand-light) 88%, black);
+    --color-primary-700: color-mix(in srgb, var(--brand-light) 76%, black);
+    --color-primary-800: color-mix(in srgb, var(--brand-light) 64%, black);
+    --color-primary-900: color-mix(in srgb, var(--brand-light) 52%, black);
 
     /* ——— Neutral (based on #191919) ——— */
     --color-neutral-50: #f5f5f5;
@@ -69,7 +74,7 @@
     --color-border-nav: var(--color-border);
 
     /* Brand semantics */
-    --color-primary: var(--color-primary-500);
+    --color-primary: var(--brand-light);
     --color-primary-hover: var(--color-primary-600);
     --color-primary-active: var(--color-primary-700);
 
@@ -85,9 +90,9 @@
     --color-surface-tint: var(--color-neutral-100);
     --color-icon-muted: var(--color-neutral-600);
 
-    --color-primary-subtle: color-mix(in srgb, var(--color-primary-100) 28%, var(--color-neutral-50));
+    --color-primary-subtle: color-mix(in srgb, var(--brand-light) 28%, var(--color-neutral-50));
     --color-primary-border: var(--color-border);
-    --color-primary-alpha-15: color-mix(in srgb, var(--color-primary-500) 15%, transparent);
+    --color-primary-alpha-15: color-mix(in srgb, var(--brand-light) 15%, transparent);
 
     --color-btn-secondary-bg: transparent;
     --color-btn-secondary-border: var(--color-primary);
@@ -582,14 +587,15 @@ main > *:only-child {
 }
 
 .site-header__logo:hover .site-header__logo-img {
-    opacity: 0.85;
+    color: var(--color-primary-hover);
 }
 
 .site-header__logo-img {
     display: block;
     height: 28px;
     width: auto;
-    transition: opacity var(--transition-fast);
+    color: var(--brand-light);
+    transition: color var(--transition-fast);
 }
 
 .site-header__nav {
@@ -1168,7 +1174,7 @@ main > *:only-child {
     width: 100%;
     box-sizing: border-box;
     padding: 40px;
-    background-color: var(--color-primary);
+    background-color: transparent;
     background-image: url("../images/survey_bg.svg");
     background-repeat: no-repeat;
     background-position: center;

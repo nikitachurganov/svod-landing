@@ -1,3 +1,4 @@
+{% from 'macros/logo.html' import logo %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -12,8 +13,8 @@
 </head>
 <body class="admin-body">
     <aside class="admin-sidebar">
-        <a class="admin-sidebar__logo" href="{{ url_for('admin.contacts') }}">
-            <img src="{{ url_for('static', filename='icons/logo.svg') }}" width="67" height="17" alt="Svod">
+        <a class="admin-sidebar__logo" href="{{ url_for('admin.contacts') }}" aria-label="Svod">
+            {{ logo('admin-sidebar__logo-img') }}
             <span class="admin-sidebar__badge">admin</span>
         </a>
         <nav class="admin-sidebar__nav">

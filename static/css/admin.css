@@ -50,6 +50,14 @@
     color: inherit;
 }
 
+.admin-sidebar__logo-img {
+    display: block;
+    flex-shrink: 0;
+    height: 17px;
+    width: auto;
+    color: var(--brand-light);
+}
+
 .admin-sidebar__badge {
     font-size: 10px;
     font-weight: var(--font-weight-semibold);

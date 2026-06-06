@@ -1,4 +1,5 @@
-<svg width="293" height="77" viewBox="0 0 293 77" fill="none" xmlns="http://www.w3.org/2000/svg">
+{% macro logo(css_class='', width=67, height=17, aria_hidden=true) %}
+<svg class="{{ css_class }}" width="{{ width }}" height="{{ height }}" viewBox="0 0 293 77" fill="none" xmlns="http://www.w3.org/2000/svg"{% if aria_hidden %} aria-hidden="true"{% endif %}>
 <g clip-path="url(#clip0_678_8723)">
 <circle cx="38.204" cy="38.2119" r="13.756" fill="currentColor" stroke="currentColor" stroke-width="3.0569"/>
 <path d="M73.0505 47.6581C71.8098 50.7288 69.9765 53.5251 67.6552 55.8873C65.3339 58.2495 62.57 60.1313 59.5214 61.4254C56.4729 62.7194 53.1992 63.4003 49.8875 63.4292C46.5758 63.4581 43.2908 62.8344 40.2201 61.5938C37.1494 60.3532 34.3531 58.5198 31.9909 56.1985C29.6287 53.8772 27.7469 51.1134 26.4528 48.0648C25.1588 45.0162 24.4779 41.7426 24.449 38.4308C24.4201 35.1191 25.0437 31.8341 26.2844 28.7634" stroke="currentColor" stroke-width="3.0569" stroke-linecap="round"/>
@@ -16,3 +17,4 @@
 </clipPath>
 </defs>
 </svg>
+{% endmacro %}

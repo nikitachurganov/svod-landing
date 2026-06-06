@@ -1,8 +1,9 @@
 {% from 'macros/ui_button.html' import ui_button %}
+{% from 'macros/logo.html' import logo %}
 <header class="site-header">
     <div class="container site-header__inner">
-        <a class="site-header__logo" href="{{ url_for('main.index') }}">
-            <img class="site-header__logo-img" src="{{ url_for('static', filename='icons/logo.svg') }}" width="67" height="17" alt="Svod">
+        <a class="site-header__logo" href="{{ url_for('main.index') }}" aria-label="Svod">
+            {{ logo('site-header__logo-img') }}
         </a>
 
         {% include 'sections/header_nav.html' %}
